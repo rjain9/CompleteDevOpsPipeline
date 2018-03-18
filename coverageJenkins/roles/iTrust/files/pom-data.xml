@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>edu.ncsu.csc</groupId>
+    <artifactId>iTrust2</artifactId>
+    <version>2.0.0</version>
+    <packaging>war</packaging>
+    <name>iTrust2</name>
+    <organization>
+            <name>NCSU Computer Science Department</name>
+            <url>https://www.csc.ncsu.edu/</url>
+    </organization>
+    <licenses>
+            <license>
+                    <name>The Apache Software License, Version 2.0</name>
+                    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+                    <distribution>repo</distribution>
+            </license>
+    </licenses>
+    <properties>
+            <m2eclipse.wtp.contextRoot>/iTrust2</m2eclipse.wtp.contextRoot>
+            <java.version>1.8</java.version>
+            <checkstyle.config.location>src/test/resources/reporting/csc_checkstyle.xml</checkstyle.config.location>
+            <cucumber.options>--plugin json:target/cucumber.json</cucumber.options>
+            <jacoco.version>0.7.5.201505241946</jacoco.version>
+            <surefire.version>2.20</surefire.version>
+            <failsafe.version>2.20</failsafe.version>
+            <maven.compiler.version>3.7.0</maven.compiler.version>
+            <jetty.version>9.2.2.v20140723</jetty.version>
+    </properties>
+    <build>
+        <finalName>iTrust2</finalName>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <resources>
+                <resource>
+                        <directory>src/main/resources</directory>
+                </resource>
+        </resources>
+        <plugin>    
+            <groupId>org.codehaus.mojo</groupId>    
+            <artifactId>exec-maven-plugin</artifactId>    
+            <version>1.4.0</version>  
+            <executions>  
+                <execution>  
+                    <id>GenerateTestData</id>   
+                    <phase>process-test-classes</phase>   
+                    <goals>   
+                        <goal>java</goal>   
+                    </goals>   
+                    <configuration>   
+                        <classpathScope>test</classpathScope>   
+                            <mainClass>edu.ncsu.csc.itrust2.utils.HibernateDataGenerator</mainClass>   
+                        <cleanupDaemonThreads>false</cleanupDaemonThreads>   
+                    </configuration>   
+                </execution>   
+            </executions>   
+        </plugin>   
+    </build>
+    <description>iTrust2 v2</description>
+</project>
