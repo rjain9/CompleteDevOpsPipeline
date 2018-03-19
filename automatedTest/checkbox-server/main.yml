@@ -1,0 +1,6 @@
+---
+- hosts: checkbox
+  roles: 
+  - dependencies
+  - repo&config
+  - run
