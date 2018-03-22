@@ -1,0 +1,120 @@
+---
+- name: Get NodeJS 9.x setup
+  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+
+- name: Install NodeJS
+  update_cache: yes
+  apt:
+    name: nodejs
+
+- name: Add Mongo ppa key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    state: present 
+
+- name: Add Mongo sources list
+  apt_repository:
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse"
+
+- name: Install MongoDB 3.6
+  update_cache: yes
+  apt:
+    name: mongodb-org
+
+- name: Install PyMongo
+  pip:
+    name: pymongo
+    version: 3.6.0
+    use_mirrors: no
+
+- name: Clone Checkbox repository
+  git: 
+    repo: https://github.com/chrisparnin/checkbox.io.git
+    dest: /home/vagrant/checkbox/
+
+- name: Create source directory
+  file: 
+    path: /home/vagrant/checkbox/server-side/site/src
+    state: directory
+
+- name: Copy Test generator
+  copy:
+    remote_src: true
+    src: /home/vagrant/CSC519DevOps-Project/checkbox/{{ item }}
+    dest: /home/vagrant/checkbox/server-side/site/{{ item }}
+  with_items:
+  - tempserver.js
+  - main.js
+  - testdb.js
+  - src/constraint.js
+  - src/format-polyfill.js
+  - src/testgenerator.js
+
+- name: Start MongoDB service
+  service: 
+    name: mongod 
+    state: started
+
+- name: Create MongoDB configuration
+  mongodb_user:
+    database: admin
+    user: "{{ MONGO_USER }}"
+    password: "{{ MONGO_PASSWORD }}"
+    roles: userAdminAnyDatabase,dbAdmin,readWriteAnyDatabase
+    state: present
+
+- name: Copy Nginx configuration
+  copy: 
+    remote_src: yes
+    src: /home/vagrant/checkbox/local-conf/nginx.conf 
+    dest: /etc/nginx/nginx.conf
+
+- name: Copy Nginx default
+  copy:
+    remote_src: yes
+    src: /home/vagrant/checkbox/local-conf/default 
+    dest: /etc/nginx/sites-available/default
+
+- name: Modify Checkbox
+  replace:
+    path: /etc/nginx/sites-available/default
+    regexp: '/Users/gameweld/bitbucket/checkbox.io/checkbox.io/public_html/'
+    replace: '/home/vagrant/checkbox/public_html'
+
+- name: npm install
+  npm:
+    path: /home/vagrant/checkbox/server-side/site/
+
+- name: Start MongoDB and Nginx services
+  service: 
+    name: '{{ item }}'
+    state: restarted
+  with_items:
+    - mongod
+    - nginx
+
+- name: Install npm modules
+  npm:
+    name: '{{ item }}'
+    path: /home/vagrant/checkbox/server-side/site/
+  with_items:
+    - istanbul-middleware
+    - esprima
+    - mongoose
+    - request
+
+- name: Run Checkbox.io
+  command: bash -lc "nohup node tempserver.js --coverage &"
+  args: 
+    chdir: /home/vagrant/checkbox/server-side/site/
+
+- name: Generate tests
+  command: node main.js
+  args: 
+    chdir: /home/vagrant/checkbox/server-side/site/
+
+- name: Run test.js
+  command: node test.js
+  args: 
+    chdir: /home/vagrant/checkbox/server-side/site/
