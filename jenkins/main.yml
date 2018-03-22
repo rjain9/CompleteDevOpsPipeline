@@ -1,0 +1,8 @@
+---
+- name: Provision Jenkins server
+  hosts: localhost
+  become: yes 
+  roles:
+    - jenkins
+    - itrust
+    - checkbox
