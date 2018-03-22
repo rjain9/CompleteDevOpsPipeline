@@ -1,5 +1,5 @@
 var im = require('istanbul-middleware'),
-    isCoverageEnabled = (process.env.COVERAGE == "true"); // or a mechanism of your choice
+    isCoverageEnabled  = "true"; // or a mechanism of your choice
 
 //before your code is require()-ed, hook the loader for coverage
 if (isCoverageEnabled) {
@@ -81,6 +81,7 @@ app.get('/api/study/vote/status', study.voteStatus );
 app.get('/api/study/status/:id', study.status );
 
 app.get('/api/study/listing', study.listing );
+
 app.post('/api/study/create', create.createStudy );
 app.post('/api/study/vote/submit/', cors(corsOptions), study.submitVote );
 
@@ -110,6 +111,8 @@ app.post('/api/study/admin/notify/', admin.notifyParticipant);
 //app.post('/api/design/survey/vote/cast', votes.castVote );
 //app.get('/api/design/survey/vote/status', votes.status );
 //app.get('/api/design/survey/vote/stat/:id', votes.getSurveyStats );
+
+
 
 app.listen(process.env.MONGO_PORT);
 console.log('Listening on port 3002...');
