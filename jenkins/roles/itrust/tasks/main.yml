@@ -1,0 +1,27 @@
+---  
+- name: Clone iTrust repository
+  git: 
+    repo: https://{{ GITHUB_USERNAME }}:{{ GITHUB_PASSWORD }}@github.ncsu.edu/oachary/iTrust2-v2.git 
+    dest: /home/vagrant/iTrust2-v2/
+    version: fuzzer
+
+- name: Add skip-grant-tables in my.cnf
+  blockinfile:
+    path: /etc/mysql/my.cnf
+    block:  |
+      [mysqld]
+      skip-grant-tables
+  become: true 
+
+- name: Start MySQL service
+  service: 
+    name: mysql
+    state: restarted
+  become: yes
+
+- name: Create iTrust's build job on Jenkins server using Jenkins Job Builder
+  command: jenkins-jobs update /home/vagrant/CSC519DevOps-Project/jenkins/roles/itrust/files/itrust.yml
+
+- name: Run Commit Fuzzer and Test prioritizer
+  command: python3 /home/vagrant/CSC519DevOps-Project/jenkins/roles/itrust/files/run_fuzzer.py
+  become: yes
