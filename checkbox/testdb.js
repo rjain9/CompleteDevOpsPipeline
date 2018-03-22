@@ -172,12 +172,16 @@ var p3 = {
     "token": "t1"
 }
 
-// var arr = ['AMZN','SURFACE','IPADMINI','GITHUB','BROWSERSTACK','NEQ'];
+var arr = ['AMZN','SURFACE','IPADMINI','GITHUB','BROWSERSTACK','NEQ'];
+var p4 = [];
 
-var p4 = {
-    "email": "a@b.com",
-    "kind": "AMZN"
+for(i in arr){
+    p4.push({
+        "email": "a@b.com",
+        "kind": arr[i]
+    });
 }
+console.log(JSON.stringify(p4));
 
 ids = ["5aaff0a4857f41071758ec85","5aaff0a4857f41071758ec84"]
 tokens = ["t1","t2"]

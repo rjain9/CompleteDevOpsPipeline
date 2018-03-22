@@ -81,11 +81,13 @@ var options = {
             content = content + `options.json = ${JSON.stringify(p3)}\n`;
             content = content + `request(options, function (error, response, body) {});\n\n`;
         } else if (functionConstraints[i].method == 'POST' && functionConstraints[i].url.indexOf('notify') >= 0) {
-            url = functionConstraints[i].url;
-            content = content + `options.method = 'POST';\n`;
-            content = content + `options.url = '${url}';\n`;
-            content = content + `options.json = ${JSON.stringify(p4)}\n`;
-            content = content + `request(options, function (error, response, body) {});\n\n`;
+            for (j in p4) {
+                url = functionConstraints[i].url;
+                content = content + `options.method = 'POST';\n`;
+                content = content + `options.url = '${url}';\n`;
+                content = content + `options.json = ${JSON.stringify(p4[j])}\n`;
+                content = content + `request(options, function (error, response, body) {});\n\n`;
+            }
         }
     }
     fs.writeFileSync('test.js', content, "utf8");
