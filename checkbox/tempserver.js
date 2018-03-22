@@ -25,7 +25,7 @@ if (isCoverageEnabled) {
 //add your router and other endpoints
 //...
 
-istanbulapp.listen(8080);
+istanbulapp.listen(8085);
 
 
 var cors = require('cors'),
