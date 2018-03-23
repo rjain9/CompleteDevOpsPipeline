@@ -54,12 +54,12 @@ ansible-playbook jenkins/main.yml
 
 ## Coverage/Jenkins Support (10 points)
 
-### iTrust
+#### iTrust
 After adding `JaCoCo` plugin to jenkins to measure coverage, it generates the code coverage report on Jenkins dashboard on every commit 
 
 ![iTrust's code coverage](img/itrust_code_coverage.png)
 
-### Checkbox
+#### Checkbox
 
 The automated test generations for checkbox.io is generated extending the Test Generation Workshop. Istanbul-middleware is used to calculate the coverage for the files. We were able to write 28 test cases, each covering different cases.  
 
@@ -74,28 +74,28 @@ We have implemented the fuzzer using `Python`. It automatically commits new rand
    - swap "<" with ">"
    - swap "==" with "!="
 
-**Approach:**
+#### Approach:
 * We have cloned a [copy](https://github.ncsu.edu/oachary/iTrust2-v2/tree/fuzzer) of [iTrust2-v2](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v2) for implementing fuzzing (TODO)
 * Initially, we have created a new branch for `iTrust2-v2`, called `fuzzer`.
 * Then, we run the `run_fuzzer.py` which does the following until we get 100 successful builds:
-      * Performs fuzzing on all `.java` files in `iTrust2-v2/iTrust2/src/main/java/edu/ncsu/csc/itrust2`
-      * Compiles it (using `mvn compile` command)
-      * If successful:
-            * Commits the changes
-            * Triggers the jenkins job which creates a new build 
-            * Reverts the changes by `git revert --no-edit HEAD`
-      * If failed:
-            * Resets the changes by `git reset --hard HEAD`
+  * Performs fuzzing on all `.java` files in `iTrust2-v2/iTrust2/src/main/java/edu/ncsu/csc/itrust2`
+  * Compiles it (using `mvn compile` command)
+  * If successful:
+    * Commits the changes
+    * Triggers the jenkins job which creates a new build 
+    * Reverts the changes by `git revert --no-edit HEAD`
+  * If failed:
+    * Resets the changes by `git reset --hard HEAD`
 * In either case, we have handled the rollback (reverting/resetting the committed changes) after completing every build in jenkins
 
-### Problems the fuzzer discovered:
+#### Problems the fuzzer discovered:
 
 The fuzzer was successful in finding out:
 * Whether the files contain hard-coded string values
 * Whether the files contain any dead code
 
 
-### Extending fuzzing operations: 
+#### Extending fuzzing operations: 
 
 * The fuzzing operations can be extended using certain additions like:
      *
@@ -107,7 +107,7 @@ The fuzzer was successful in finding out:
 
 We have created a function in the `python` script to perform test priorization analysis that examines the results of the 100 commit fuzzer runs and test suite runs. It outputs a report `test_priority.txt` in the root directory (`/home/vagrant/`) that displays the test cases in sorted order, based on time to execute and number of failed tests discovered.
 
-### Approach:
+#### Approach:
 
 * Combine `JUnit`'s build job reports `junitResult.xml` for all the successful builds
 * Find out the number of test cases failed for each build.
@@ -115,7 +115,7 @@ We have created a function in the `python` script to perform test priorization a
 * In case there is a tie, find out the test case run duration, and use it further for sorting the tests.
 * Generate a report using the sorted tests as a text file (`test_priority.txt`)
      
-### Ranking the test cases:
+#### Ranking the test cases:
 
 * In the test case prioritization report, the tests which never failed (even after fuzzing) and hence are not useful in detecting errors in code. Thus, those are the useless tests.
 * Some unit tests like `testCodes`, `testFieldValidation`, `testOfficeVisit`, etc. never fail and hence are useless.
@@ -125,7 +125,7 @@ We have created a function in the `python` script to perform test priorization a
 
 We have implemented Automated test generation to analyze checkbox.io's server-side code, that automates the generation of test cases for the API routes in server.js file of checkbox.io
 
-### Approach:
+#### Approach:
 * Used the code for automating test generation written in HW2.   
 * Used esprima to search for any API calls in server.js.  
 * Created a Javascript object, for each occurrence of API, to store both method and route. 
@@ -136,10 +136,10 @@ We have implemented Automated test generation to analyze checkbox.io's server-si
 * Istanbul-middleware is used to calculate the coverage for the test file. 
 * 28 test cases were written, each covering different cases.
 
-### Coverage:
+#### Coverage:
 The Branch coverage obtained is about 75%. That is for all the files in routes directory.
 
-### Issues
+#### Issues
 We were not able to write test case covering the upload file. Also some branches in study.js were difficult to cover.
 
 ## Individual Contribution:
