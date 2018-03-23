@@ -88,6 +88,8 @@ We have implemented the fuzzer using `Python`. It automatically commits new rand
     * Resets the changes by `git reset --hard HEAD`
 * In either case, we have handled the rollback (reverting/resetting the committed changes) after completing every build in jenkins
 
+**You can check all the commits made by commit fuzzer [here](https://github.ncsu.edu/oachary/iTrust2-v2/commits/fuzzer)**
+
 #### Problems the fuzzer discovered:
 
 The fuzzer was successful in finding out:
@@ -136,11 +138,9 @@ We have implemented Automated test generation to analyze checkbox.io's server-si
 * Istanbul-middleware is used to calculate the coverage for the test file. 
 * 28 test cases were written, each covering different cases.
 
-#### Coverage:
-The Branch coverage obtained is about 75%. That is for all the files in routes directory.
+**Coverage:** The Branch coverage obtained is about 75%. That is for all the files in routes directory.
 
-#### Issues
-We were not able to write test case covering the upload file. Also some branches in study.js were difficult to cover.
+**Issues:** We were not able to write test case covering the upload file. Also some branches in study.js were difficult to cover.
 
 ## Individual Contribution:
 **Omkar Acharya (oachary):**
