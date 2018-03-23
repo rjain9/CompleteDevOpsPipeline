@@ -75,7 +75,7 @@ We have implemented the fuzzer using `Python`. It automatically commits new rand
    - swap "==" with "!="
 
 #### Approach:
-* We have cloned a [copy](https://github.ncsu.edu/oachary/iTrust2-v2/tree/fuzzer) of [iTrust2-v2](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v2) for implementing fuzzing (TODO)
+* We have cloned a [copy](https://github.ncsu.edu/oachary/iTrust2-v2/tree/fuzzer) of [iTrust2-v2](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v2) for implementing fuzzing
 * Initially, we have created a new branch for `iTrust2-v2`, called `fuzzer`.
 * Then, we run the `run_fuzzer.py` which does the following until we get 100 successful builds:
   * Performs fuzzing on all `.java` files in `iTrust2-v2/iTrust2/src/main/java/edu/ncsu/csc/itrust2`
@@ -88,22 +88,19 @@ We have implemented the fuzzer using `Python`. It automatically commits new rand
     * Resets the changes by `git reset --hard HEAD`
 * In either case, we have handled the rollback (reverting/resetting the committed changes) after completing every build in jenkins
 
-**You can check all the commits made by commit fuzzer [here](https://github.ncsu.edu/oachary/iTrust2-v2/commits/fuzzer)**
+**You can check all the commits made by commit fuzzer [here](https://github.ncsu.edu/oachary/iTrust2-v2/commits/fuzzer).**
 
-#### Problems the fuzzer discovered:
+#### Problems which the commit fuzzer discovered:
 
 The fuzzer was successful in finding out:
 * Whether the files contain hard-coded string values
-* Whether the files contain any dead code
-
+* Whether the files contain any dead code/function
 
 #### Extending fuzzing operations: 
 
-The fuzzing operations can be extended using certain additions like:
-* swap the return values of 0 and 1
-* change the length of 'string' values  
-
- 
+* The fuzzing operations can be extended using certain additions like swapping 0's with 1's or swapping `True` with `False` in the retun statements.
+* Moreover, Instead of using the `black-box` approach, we can switch to more intelligent `white-box` fuzzing
+* Here, we are mutating the code base itself. Gererative approach of fuzzing can also be used with the creation of random test inputs
 
 ## Test prioritization analysis (25 points)
 
