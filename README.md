@@ -146,6 +146,11 @@ We were not able to write test case covering the upload file. Also some branches
 Omkar's Contribution:
 
 Rishi's Contribution:
+* Initial checkbox and iTrust set up.
+* Set up the Jenkins server to work with Jacoco and show iTrust’s initial coverage.
+* Added schemas and model code and initial test generator code for checkbox.io. 
+* Initially testing on checkbox.io by manually adding data using postman and hitting api.
+* Added the code for Istanbul middleware to work with checkbox.io .
 
 Shriyansh's Contribution:
 * Worked with Ansible script to setup iTrust locally.
