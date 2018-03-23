@@ -55,12 +55,14 @@ ansible-playbook jenkins/main.yml
 ## Coverage/Jenkins Support (10 points)
 
 ### iTrust
-After adding `JaCoCo` plugin to jenkins to measure coverage, it generates the code coverage report on Jenkins dashboard on every commit  
+After adding `JaCoCo` plugin to jenkins to measure coverage, it generates the code coverage report on Jenkins dashboard on every commit 
+
 ![iTrust's code coverage](img/itrust_code_coverage.png)
 
 ### Checkbox
 
-The automated test generations   
+The automated test generations for checkbox.io is generated extending the Test Generation Workshop. Istanbul-middleware is used to calculate the coverage for the files. We were able to write 28 test cases, each covering different cases.  
+
 ![Checkbox's code coverage](img/checkbox_code_coverage.png)
 
 
@@ -90,7 +92,7 @@ We have implemented the fuzzer using `Python`. It automatically commits new rand
 
 The fuzzer was successful in finding out:
 * Whether the files contain hard-coded string values
-* Whether 
+* Whether the files contain any dead code
 
 
 ### Extending fuzzing operations: 
@@ -103,8 +105,7 @@ The fuzzer was successful in finding out:
 
 ![Test Prioritization](img/test_prioritization_report.png)
 
-We have created a function in the `python` script to perform test priorization analysis that examines the results 
-of the 100 commit fuzzer runs and test suite runs. It outputs a report `test_priority.txt` in the root directory (`/home/vagrant/`) that displays the test cases in sorted order, based on time to execute and number of failed tests discovered.
+We have created a function in the `python` script to perform test priorization analysis that examines the results of the 100 commit fuzzer runs and test suite runs. It outputs a report `test_priority.txt` in the root directory (`/home/vagrant/`) that displays the test cases in sorted order, based on time to execute and number of failed tests discovered.
 
 ### Approach:
 
@@ -122,8 +123,7 @@ of the 100 commit fuzzer runs and test suite runs. It outputs a report `test_pri
 
 ## Automated Test Generation (25 points)
 
-We have implemented Automated test generation to analyze checkbox.io's server-side code, that automates the
-generation of test cases for the API routes in server.js file of checkbox.io
+We have implemented Automated test generation to analyze checkbox.io's server-side code, that automates the generation of test cases for the API routes in server.js file of checkbox.io
 
 ### Approach:
 * Used the code for automating test generation written in HW2.   
@@ -143,22 +143,28 @@ The Branch coverage obtained is about 75%. That is for all the files in routes d
 We were not able to write test case covering the upload file. Also some branches in study.js were difficult to cover.
 
 ## Individual Contribution:
-Omkar's Contribution:
+**Omkar Acharya (oachary):**
+* Updated Config and Build milestone's scripts as per this milestone's requirements
+* Wrote the commit fuzzer for iTrust 
+* Tested the fuzzer using iTrust test suites for 100 iterations via Jenkins and JJB
+* Wrote test case prioritizer and generated a report
+* Worked with Rishi to achieve JaCoCo's coverage report on Jenkins for iTrust
+* Prepared iTrust's screencast and restructured the code base for this GitHub repo
 
-Rishi's Contribution:
+**Rishi Jain (rjain9):**
 * Initial checkbox and iTrust set up.
 * Set up the Jenkins server to work with Jacoco and show iTrust’s initial coverage.
 * Added schemas and model code and initial test generator code for checkbox.io. 
 * Initially testing on checkbox.io by manually adding data using postman and hitting api.
 * Added the code for Istanbul middleware to work with checkbox.io .
 
-Shriyansh's Contribution:
+**Shriyansh Yadav (scyadav):**
 * Worked with Ansible script to setup iTrust locally.
 * Paired up with Rishi to work on generating JaCoCo coverage reports by debugging errors during iTrust build. 
 * Worked on fuzzing initially.  
 * Prepared README.md and checkbox screencast
 
-Urmil's Contribution
+**Urmil Parikh (uparikh):**
  * Manually analysed checkbox.io to discover different kind of API calls
  * Changed HW2 code (constraints.js and testgeneration.js) to handle API requests.
  * Automated generation of test.js
