@@ -53,14 +53,13 @@ ansible-playbook jenkins/main.yml
 ## Coverage/Jenkins Support (10 points)
 
 ### iTrust
-After adding `JaCoCo` plugin to jenkins to measure coverage, it generates the code coverage report on Jenkins dashboard on every commit
-
-![iTrust's code coverage]()
+After adding `JaCoCo` plugin to jenkins to measure coverage, it generates the code coverage report on Jenkins dashboard on every commit  
+![iTrust's code coverage](img/itrust_code_coverage.png)
 
 ### Checkbox
 
-The automated test generations
-![Checkbox's code coverage]()
+The automated test generations   
+![Checkbox's code coverage](img/checkbox_code_coverage.png)
 
 
 ### Automated Commit Fuzzer (25 points)
@@ -100,7 +99,7 @@ The fuzzer was successful in finding out:
 
 ### Test prioritization analysis (25 points)
 
-![Test Prioritization]()
+![Test Prioritization](img/test_prioritization_report.png)
 
 We have created a function in the `python` script to perform test priorization analysis that examines the results 
 of the 100 commit fuzzer runs and test suite runs. It outputs a report `test_priority.txt` in the root directory (`/home/vagrant/`) that displays the test cases in sorted order, based on time to execute and number of failed tests discovered.
@@ -142,8 +141,7 @@ We were not able to write test case covering the upload file. Also some branches
 
 ### Screencast:  
 
-Checkbox - https://www.youtube.com/watch?v=n1GZSuzz6Mo&feature=youtu.be
-iTrust- https://www.youtube.com/watch?v=sFB0MfV1lbM&feature=youtu.be
+**[Checkbox](https://www.youtube.com/watch?v=n1GZSuzz6Mo&feature=youtu.be) | [iTrust](https://www.youtube.com/watch?v=sFB0MfV1lbM&feature=youtu.be)**
 
 Omkar's Contribution:
 
