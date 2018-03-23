@@ -99,9 +99,11 @@ The fuzzer was successful in finding out:
 
 #### Extending fuzzing operations: 
 
-* The fuzzing operations can be extended using certain additions like:
-     *
-     *
+The fuzzing operations can be extended using certain additions like:
+* swap the return values of 0 and 1
+* change the length of 'string' values  
+
+ 
 
 ## Test prioritization analysis (25 points)
 
