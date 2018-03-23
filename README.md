@@ -124,7 +124,15 @@ We have implemented Automated test generation to analyze checkbox.io's server-si
 generation of test cases for the API routes in server.js file of checkbox.io
 
 **Approach:**
-* Used the code for automation test generation that we had written in HW2. Using esprima we searched for any API calls in server.js. For each occurance we created a Javascript object, storing both its method and route. Each of those objects were then pushed to an array and passed to the test generator file. For test generation we created request for them assigning proper routes, methods and options. The data for options is created and stored in a test database. Also the options considered are such that they cover as much branches as possible. Istanbul-middleware is used to calculate the coverage for the test file. We were able to write 28 test cases, each convering different cases.
+* Used the code for automating test generation written in HW2.   
+* Used esprima to search for any API calls in server.js.  
+* Created a Javascript object, for each occurrence of API, to store both method and route. 
+* Each of these objects is pushed to an array and passed to the test generator file.  
+* Created request for assigning proper routes, methods and options, for test generation. 
+* Data for options is created and stored in a test database. 
+* Options considered are such that they cover as much branches as possible. 
+* Istanbul-middleware is used to calculate the coverage for the test file. 
+* 28 test cases were written, each covering different cases.
 
 **Coverage:**
 The Branch coverage obtained is about 75%. That is for all the files in routes directory.
