@@ -137,3 +137,41 @@
     src: /home/vagrant/CSC519DevOps-Project/jenkins/roles/jenkins/files/jenkins_jobs.ini
     dest: /etc/jenkins_jobs/jenkins_jobs.ini
     mode: 644
+
+- name: Create AWS key
+  ec2_key:
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+    name: key1
+    region: "{{ lookup('env', 'AWS_REGION') }}"
+    state: present
+  register: ec2_i
+
+- name: Generate AWS private key
+  copy:
+    content: "{{ ec2_i.key.private_key }}"
+    dest: /home/ubuntu/.ssh/aws_key1.key
+    mode: 0600
+
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      export GITHUB_NAME={{ lookup('env', 'GITHUB_NAME') }}
+      export GITHUB_EMAIL={{ lookup('env', 'GITHUB_EMAIL') }}
+      export GITHUB_USERNAME={{ lookup('env', 'GITHUB_USERNAME') }}
+      export GITHUB_PASSWORD={{ lookup('env', 'GITHUB_PASSWORD') }}
+      export MAIL_FROM="{{ lookup('env', 'MAIL_FROM') }}"      
+      export MAIL_USER="{{ lookup('env', 'MAIL_USER') }}"
+      export MAIL_PASSWORD="{{ lookup('env', 'MAIL_PASSWORD') }}"
+      export MAIL_SMTP="{{ lookup('env', 'MAIL_SMTP') }}"
+      export MONGO_USER={{ lookup('env', 'MONGO_USER') }}
+      export MONGO_PASSWORD={{ lookup('env', 'MONGO_PASSWORD') }}
+      export MONGO_IP={{ lookup('env', 'MONGO_IP') }}
+      export MONGO_PORT={{ lookup('env', 'MONGO_PORT') }}
+      export AWS_REGION={{ lookup('env', 'AWS_REGION') }}
+      export AWS_ACCESS_KEY={{ lookup('env', 'AWS_ACCESS_KEY') }}
+      export AWS_SECRET_KEY={{ lookup('env', 'AWS_SECRET_KEY') }}
+      export AWS_KEY_PAIR={{ lookup('env', 'AWS_KEY_PAIR') }}
+    create: yes
+    state: present
