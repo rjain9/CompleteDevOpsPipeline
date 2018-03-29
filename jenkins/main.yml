@@ -8,8 +8,7 @@
     # - checkbox
 
 - name: Create EC2 instances
-  hosts: jenkins-aws
-  connection: local
+  hosts: jenkins
   become: false
   roles:
     - aws
