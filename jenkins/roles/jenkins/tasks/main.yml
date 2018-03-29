@@ -44,7 +44,7 @@
 - name: Clone Milestone repository
   git: 
     repo: https://{{ GITHUB_USERNAME }}:{{ GITHUB_PASSWORD }}@github.ncsu.edu/rjain9/CSC519DevOps-Project.git
-    dest: /home/ubuntu/CSC519DevOps-Project
+    dest: /home/vagrant/CSC519DevOps-Project
     version: dev-omkar
 
 - name: Correct GitHub repository permissions
@@ -150,7 +150,7 @@
 - name: Generate AWS private key
   copy:
     content: "{{ ec2_i.key.private_key }}"
-    dest: /home/ubuntu/.ssh/aws_key1.key
+    dest: /home/vagrant/.ssh/aws_key1.key
     mode: 0600
 
 - name: Set environment variables
