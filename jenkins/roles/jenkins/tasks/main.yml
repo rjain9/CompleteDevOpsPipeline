@@ -1,4 +1,4 @@
----
+# ---
 - name: Add repository for Java 8
   apt_repository: 
     repo: 'ppa:webupd8team/java' 
@@ -186,20 +186,6 @@
       AWS_ACCESS_KEY={{ AWS_ACCESS_KEY }}
       AWS_SECRET_KEY={{ AWS_SECRET_KEY }}
       AWS_KEY_PAIR={{ AWS_KEY_PAIR }}
+      AWS_SSH_KEY={{ AWS_SSH_KEY }}
     create: yes
     state: present
-
-# - name: Copy aws template files
-#   copy:
-#     src: /home/vagrant/templates/ec2_ip_list
-#     dest: "{{ aws_role }}ec2_ip_list"
-
-# - name: Copy checkbox template files
-#   copy:
-#     src: /home/vagrant/templates/checkbox_inventory
-#     dest: "{{ checkbox_role }}checkbox_inventory"
-
-# - name: Copy itrust template files
-#   copy:
-#     src: /home/vagrant/templates/itrust_inventory
-#     dest: "{{ itrust_role }}itrust_inventory"
