@@ -1,7 +1,7 @@
 ---
 jenkins_java_args: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
 jenkins_defaults_file: /etc/default/jenkins
-jenkins_port: 9090
+jenkins_port: 8080
 jenkins_delay: 20
 jenkins_hostname: localhost
 jenkins_url: http://{{ jenkins_hostname }}:{{ jenkins_port }}
