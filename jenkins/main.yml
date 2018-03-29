@@ -1,4 +1,11 @@
 ---
+- name: Create an EC2 instance for Jenkins server
+  hosts: local
+  connection: local
+  become: false
+  roles:
+    - aws
+
 - name: Provision Jenkins server
   hosts: jenkins
   become: yes 
