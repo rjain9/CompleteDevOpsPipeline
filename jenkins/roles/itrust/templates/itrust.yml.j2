@@ -6,7 +6,15 @@
         rm -rf iTrust2-v2/
         git clone https://$github_username:$github_password@github.ncsu.edu/oachary/iTrust2-v2.git
         cd iTrust2-v2/iTrust2
-        mvn process-test-classes
+        cp src/main/resources/hibernate.properties.template src/main/resources/hibernate.properties
+        cp src/main/java/db.properties.template src/main/java/db.properties
+        echo "from $mail_from" >> src/main/java/email.properties
+        echo "username $mail_username" >> src/main/java/email.properties
+        echo "password $mail_password" >> src/main/java/email.properties
+        echo "host $mail_host" >> src/main/java/email.properties
+        cp /home/vagrant/CSC519DevOps-Project/jenkins/roles/itrust/files/pom-data.xml pom-data.xml
+        mvn -f pom-data.xml process-test-classes
+        mvn package
     concurrent: false
     description: Push hook for itrust deployment
     disabled: false
@@ -28,6 +36,22 @@
           <EnvInjectPasswordEntry>
           <name>github_password</name>
           <value>{{github_password}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_from</name>
+          <value>{{mail_from}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_username</name>
+          <value>{{mail_username}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_password</name>
+          <value>{{mail_password}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_host</name>
+          <value>{{mail_host}}</value>
           </EnvInjectPasswordEntry>
           </passwordEntries>
           </EnvInjectPasswordWrapper>

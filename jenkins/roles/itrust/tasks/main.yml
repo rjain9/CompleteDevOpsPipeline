@@ -13,10 +13,14 @@
     state: restarted
   become: yes
 
-- name: Set GitHub credentials
+- name: Set GitHub and Mail credentials
   set_fact:
     github_username: "{{ GITHUB_USERNAME }}"
     github_password: "{{ GITHUB_PASSWORD }}"
+    mail_from: "{{ MAIL_FROM }}"
+    mail_username: "{{ MAIL_USER }}"
+    mail_password: "{{ MAIL_PASSWORD }}"
+    mail_host: "{{ MAIL_SMTP }}"
 
 - name: Create iTrust's job file
   template:
