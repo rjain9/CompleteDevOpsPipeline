@@ -50,6 +50,11 @@
 - name: Correct GitHub repository permissions
   shell: chmod -R 777 /home/vagrant/CSC519DevOps-Project
 
+- name: Set GitHub and Mail credentials
+  set_fact:
+    github_username: "{{ GITHUB_USERNAME }}"
+    github_password: "{{ GITHUB_PASSWORD }}"
+
 - name: Copy Jenkins' config file
   copy:
     remote_src: True
@@ -66,13 +71,18 @@
   wait_for:
     port: "{{ jenkins_port }}"
     delay: "{{ jenkins_delay }}"
-    
+
 - name: Copy Jenkins' config file
   copy:
     remote_src: True
     src: /home/vagrant/CSC519DevOps-Project/jenkins/roles/jenkins/files/jenkins_config.xml
     dest: /var/lib/jenkins/config.xml
     mode: 777
+
+- name: Copy Jenkins' config file
+  template:
+    src: /home/vagrant/CSC519DevOps-Project/jenkins/roles/jenkins/templates/credentials.xml.j2
+    dest: /var/lib/jenkins/credentials.xml
 
 - name: Allow Jenkins to run as the super user
   replace:
@@ -100,6 +110,7 @@
   command: java -jar "{{ jenkins_jar_location }}" -s "{{ jenkins_url }}" install-plugin "{{ item }}"
   with_items:
     - git
+    - github
     - maven-plugin
     - nodejs
     - postbuild-task
