@@ -4,7 +4,7 @@
     builders:
     - shell: |-
         rm -rf iTrust2-v2/
-        git clone https://{{github_username}}:{{github_password}}@github.ncsu.edu/oachary/iTrust2-v2.git
+        git clone https://$github_username:$github_password@github.ncsu.edu/oachary/iTrust2-v2.git
         cd iTrust2-v2/iTrust2
         mvn process-test-classes
     concurrent: false
@@ -14,3 +14,20 @@
     project-type: freestyle
     publishers: []
     triggers: []
+    wrappers:
+    - raw:
+        xml: |
+          <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+          <injectGlobalPasswords>false</injectGlobalPasswords>
+          <maskPasswordParameters>true</maskPasswordParameters>
+          <passwordEntries>
+          <EnvInjectPasswordEntry>
+          <name>github_username</name>
+          <value>{{github_username}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>github_password</name>
+          <value>{{github_password}}</value>
+          </EnvInjectPasswordEntry>
+          </passwordEntries>
+          </EnvInjectPasswordWrapper>

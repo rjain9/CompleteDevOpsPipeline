@@ -13,10 +13,15 @@
     state: restarted
   become: yes
 
-- name: Get IPs of all EC2 instances
+- name: Set GitHub credentials
   set_fact:
     github_username: "{{ GITHUB_USERNAME }}"
     github_password: "{{ GITHUB_PASSWORD }}"
 
-- name: Create iTrust's build job on Jenkins server using Jenkins Job Builder
-  command: jenkins-jobs update itrust.yml.j2
+- name: Create iTrust's job file
+  template:
+    src: itrust.yml.j2
+    dest: /home/vagrant/CSC519DevOps-Project/jenkins/roles/itrust/files/itrust.yml
+
+- name: Create job on Jenkins using Jenkins Job Builder
+  command: jenkins-jobs update /home/vagrant/CSC519DevOps-Project/jenkins/roles/itrust/files/itrust.yml

@@ -1,4 +1,4 @@
-# ---
+---
 - name: Add repository for Java 8
   apt_repository: 
     repo: 'ppa:webupd8team/java' 
