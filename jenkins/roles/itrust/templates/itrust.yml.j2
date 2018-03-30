@@ -3,9 +3,7 @@
     block-upstream: false
     builders:
     - shell: |-
-        rm -rf iTrust2-v2/
-        git clone https://$github_username:$github_password@github.ncsu.edu/oachary/iTrust2-v2.git
-        cd iTrust2-v2/iTrust2
+        cd iTrust2
         cp src/main/resources/hibernate.properties.template src/main/resources/hibernate.properties
         cp src/main/java/db.properties.template src/main/java/db.properties
         echo "from $mail_from" >> src/main/java/email.properties
@@ -16,12 +14,36 @@
         mvn -f pom-data.xml process-test-classes
         mvn package
     concurrent: false
-    description: Push hook for itrust deployment
+    description: Deployment Job for iTrust2-v2
     disabled: false
+    display-name: iTrust2-v2
     name: !!python/unicode 'itrust'
     project-type: freestyle
-    publishers: []
-    triggers: []
+    properties:
+    - github:
+        url: https://github.ncsu.edu/oachary/iTrust2-v2/
+    publishers:
+    - post-tasks:
+      - escalate-status: true
+        matches:
+        - log-text: BUILD SUCCESS
+          operator: AND
+        run-if-job-successful: true
+        script: /home/vagrant/CSC519DevOps-Project/jenkins-server/roles/deploy-itrust/files/deploy-itrust.sh
+    scm:
+    - git:
+        branches:
+        - '*/production'
+        credentials-id: github_credentials
+        local-branch: production
+        name: temp-repo
+        url: https://github.ncsu.edu/oachary/iTrust2-v2.git
+    triggers:
+    - github
+    - pollscm:
+        cron: '* * * * *'
+        ignore-post-commit-hooks: true
+    workspace: /home/vagrant/iTrust2-v2
     wrappers:
     - raw:
         xml: |
