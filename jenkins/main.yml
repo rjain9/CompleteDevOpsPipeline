@@ -4,11 +4,16 @@
   become: yes 
   roles:
     - jenkins
-    # - itrust
-    # - checkbox
 
 - name: Create EC2 instances
   hosts: jenkins
   become: false
   roles:
     - aws
+
+- name: Provision iTrust server
+  hosts: jenkins
+  become: yes 
+  roles:
+    - itrust
+    # - checkbox
