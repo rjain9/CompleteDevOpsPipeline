@@ -48,3 +48,8 @@
   template:
     src: itrust_inventory.j2
     dest: "{{ local_templates }}itrust_inventory"
+
+- name: Create MySQL config file
+  template:
+    src: mysql-config.xml.j2
+    dest: "{{ local_templates }}mysql-config.xml"
