@@ -31,7 +31,13 @@
     state: latest
     update_cache: yes
 
-- name: Install packages [Git, Pip, Pip3, Maven, MySQL, Nginx]
+- name: Add Ansible apt repository
+  apt_repository:
+    repo: ppa:ansible/ansible
+    update_cache: yes
+    state: present
+
+- name: Install packages [Git, Pip, Pip3, Maven, MySQL, Nginx, Ansible]
   apt: name={{ item }} state=present
   with_items:
     - git
@@ -40,6 +46,7 @@
     - maven
     - mysql-server
     - nginx
+    - ansible
 
 - name: Clone Milestone repository
   git: 
