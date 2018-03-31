@@ -11,6 +11,7 @@
     block:  |
       [mysqld]
       skip-grant-tables
+      bind-address = 0.0.0.0
   become: true 
 
 - name: Start MySQL service
@@ -19,17 +20,20 @@
     state: restarted
   become: yes
 
-- name: Install ufw
-  apt:
-    name: ufw
-    state: latest
-    update_cache: yes
+# - name: Install ufw
+#   apt:
+#     name: ufw
+#     state: latest
+#     update_cache: yes
 
-- name: Open MySQL port via ufw
-  ufw:
-    rule: allow
-    port: '3306'
-    state: reloaded
+# - name: Open MySQL port via ufw
+#   ufw:
+#     rule: allow
+#     port: '3306'
+#     state: reloaded
+
+# - name: Enable firewall
+#   shell: ufw enable
 
 - name: Export the current state of MySQL from jenkins server
   local_action: "shell mysqldump iTrust2 > /tmp/itrust.sql"
