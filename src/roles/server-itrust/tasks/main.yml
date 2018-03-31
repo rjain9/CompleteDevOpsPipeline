@@ -44,7 +44,7 @@
 
 - name: Copy tomcat config file
   copy:
-    src: /home/vagrant/CSC519DevOps-Project/roles/server-itrust/files/tomcat-users.xml
+    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-itrust/files/tomcat-users.xml
     dest: /opt/tomcat9/conf/tomcat-users.xml
     mode: 0500
 
