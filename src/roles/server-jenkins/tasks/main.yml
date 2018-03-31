@@ -207,3 +207,6 @@
       AWS_SSH_KEY={{ AWS_SSH_KEY }}
     create: yes
     state: present
+
+- name: Update the bash profile
+  shell: . /etc/environment
