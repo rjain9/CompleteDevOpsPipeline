@@ -51,7 +51,7 @@
 - name: Copy latest WAR file to Tomcat's deployment folder
   copy:
     src: "{{ itrust_war }}"
-    dest: "/opt/tomcat9/webapps/itrust.war"
+    dest: "/opt/tomcat9/webapps/iTrust2.war"
 
 - name: Shutdown Tomcat
   shell: nohup sh /opt/tomcat9/bin/shutdown.sh
