@@ -7,10 +7,7 @@
         cp src/main/resources/hibernate.properties.template src/main/resources/hibernate.properties
         cp src/main/java/db.properties.template src/main/java/db.properties
         rm -rf src/main/java/email.properties
-        echo "from $mail_from" >> src/main/java/email.properties
-        echo "username $mail_username" >> src/main/java/email.properties
-        echo "password $mail_password" >> src/main/java/email.properties
-        echo "host $mail_host" >> src/main/java/email.properties
+        printf "from $from\nusername $mail_username\npassword $password\nhost $mail_host" > src/main/java/email.properties
         cp /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/pom-data.xml pom-data.xml
         mvn -f pom-data.xml process-test-classes
         mvn package
@@ -65,20 +62,20 @@
           <value>{{github_password}}</value>
           </EnvInjectPasswordEntry>
           <EnvInjectPasswordEntry>
-          <name>mail_from</name>
+          <name>from</name>
           <value>{{mail_from}}</value>
           </EnvInjectPasswordEntry>
           <EnvInjectPasswordEntry>
           <name>mail_username</name>
-          <value>{{mail_username}}</value>
+          <value>{{mail_user}}</value>
           </EnvInjectPasswordEntry>
           <EnvInjectPasswordEntry>
-          <name>mail_password</name>
+          <name>password</name>
           <value>{{mail_password}}</value>
           </EnvInjectPasswordEntry>
           <EnvInjectPasswordEntry>
           <name>mail_host</name>
-          <value>{{mail_host}}</value>
+          <value>{{mail_smtp}}</value>
           </EnvInjectPasswordEntry>
           </passwordEntries>
           </EnvInjectPasswordWrapper>
