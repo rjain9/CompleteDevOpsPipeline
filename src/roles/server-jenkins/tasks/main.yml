@@ -86,7 +86,7 @@
     dest: /var/lib/jenkins/config.xml
     mode: 777
 
-- name: Copy Jenkins' config file
+- name: Copy Jenkins' credentials file
   template:
     src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/templates/credentials.xml.j2
     dest: /var/lib/jenkins/credentials.xml

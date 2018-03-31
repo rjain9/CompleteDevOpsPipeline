@@ -1,9 +1,9 @@
 [mysql]
-mysql ansible_ssh_host={{ mysql }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
+mysql-server ansible_ssh_host={{ mysql }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
 
 [itrust]
-host1 ansible_ssh_host={{ host1 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
-host2 ansible_ssh_host={{ host2 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
-host3 ansible_ssh_host={{ host3 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
-host4 ansible_ssh_host={{ host4 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
-host5 ansible_ssh_host={{ host5 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
+itrust-server-1 ansible_ssh_host={{ host1 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
+itrust-server-2 ansible_ssh_host={{ host2 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
+itrust-server-3 ansible_ssh_host={{ host3 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
+itrust-server-4 ansible_ssh_host={{ host4 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
+itrust-server-5 ansible_ssh_host={{ host5 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3
