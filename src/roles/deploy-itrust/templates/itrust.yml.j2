@@ -11,10 +11,6 @@
         cp /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/pom-data.xml pom-data.xml
         mvn -f pom-data.xml process-test-classes
         mvn package
-        cd target
-        mkdir META-INF
-        cp /home/vagrant/templates/mysql-context.xml META-INF/context.xml
-        jar -uvf iTrust2.war META-INF/context.xml
     concurrent: false
     description: Deployment Job for iTrust2-v2
     disabled: false
