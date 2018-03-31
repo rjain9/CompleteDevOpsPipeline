@@ -1,0 +1,18 @@
+---
+- name: Provision Jenkins server
+  hosts: jenkins
+  become: yes 
+  roles:
+    - server-jenkins
+
+- name: Create EC2 instances
+  hosts: jenkins
+  become: false
+  roles:
+    - create-ec2
+
+- name: Deploy iTrust
+  hosts: jenkins
+  become: yes 
+  roles:
+    - deploy-itrust

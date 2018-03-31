@@ -1,0 +1,202 @@
+---
+- name: Add repository for Java 8
+  apt_repository: 
+    repo: 'ppa:webupd8team/java' 
+    state: present
+
+- name: Set license selected for Oracle Java 8
+  shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+
+- name: Set license seen for Oracle Java 8
+  shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
+
+- name: Install Java 8
+  apt: 
+    name: oracle-java8-installer 
+    state: latest 
+    update-cache: yes
+
+- name: Add Jenkins key
+  apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins.io.key
+    state: present
+
+- name: Add Jenkins official APT repository
+  apt_repository:
+    repo: "deb https://pkg.jenkins.io/debian binary/"
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: latest
+    update_cache: yes
+
+- name: Install packages [Git, Pip, Pip3, Maven, MySQL, Nginx]
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - python-pip
+    - python3-pip
+    - maven
+    - mysql-server
+    - nginx
+
+- name: Clone Milestone repository
+  git: 
+    repo: https://{{ GITHUB_USERNAME }}:{{ GITHUB_PASSWORD }}@github.ncsu.edu/rjain9/CSC519DevOps-Project.git
+    dest: /home/vagrant/CSC519DevOps-Project
+    version: dev-omkar
+
+- name: Correct GitHub repository permissions
+  shell: chmod -R 777 /home/vagrant/CSC519DevOps-Project
+
+- name: Set GitHub and Mail credentials
+  set_fact:
+    github_username: "{{ GITHUB_USERNAME }}"
+    github_password: "{{ GITHUB_PASSWORD }}"
+
+- name: Copy Jenkins' config file
+  copy:
+    remote_src: True
+    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins
+    dest: /etc/default/jenkins
+    mode: 777
+
+- name: Start Jenkins
+  service:
+    name: jenkins 
+    state: restarted
+
+- name: Wait for Jenkins to start
+  wait_for:
+    port: "{{ jenkins_port }}"
+    delay: "{{ jenkins_delay }}"
+
+- name: Copy Jenkins' config file
+  copy:
+    remote_src: True
+    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins_config.xml
+    dest: /var/lib/jenkins/config.xml
+    mode: 777
+
+- name: Copy Jenkins' config file
+  template:
+    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/templates/credentials.xml.j2
+    dest: /var/lib/jenkins/credentials.xml
+
+- name: Allow Jenkins to run as the super user
+  replace:
+    path: /etc/default/jenkins
+    regexp: '^JENKINS_USER=\$NAME' 
+    replace: 'JENKINS_USER="root"'
+
+- name: Restart Jenkins
+  service:
+    name: jenkins 
+    state: restarted
+
+- name: Wait for Jenkins to restart
+  wait_for:
+    port: "{{ jenkins_port }}"
+    delay: "{{ jenkins_delay }}"
+
+- name: Download Jenkins CLI jar
+  get_url:
+    url: "{{ jenkins_cli_jar }}"
+    dest: "{{ jenkins_jar_location }}"
+    mode: 755
+
+- name: Install Jenkins' Plugins
+  command: java -jar "{{ jenkins_jar_location }}" -s "{{ jenkins_url }}" install-plugin "{{ item }}"
+  with_items:
+    - git
+    - github
+    - maven-plugin
+    - nodejs
+    - postbuild-task
+    - envinject
+    - jacoco
+    - junit
+    - build-timeout
+
+- name: Restart Jenkins
+  service:
+    name: jenkins 
+    state: restarted
+
+- name: Wait for Jenkins to restart
+  wait_for:
+    port: "{{ jenkins_port }}"
+    delay: "{{ jenkins_delay }}"
+
+- name: Install Jenkins Job Builder (JJB)
+  pip: name={{ item }} state=present executable=pip3
+  with_items:
+    jenkins-job-builder
+    python-jenkins
+    
+- name: Create Jenkins Job directory
+  file:
+    path: /etc/jenkins_jobs
+    state: directory
+    mode: 644
+
+- name: Copy Jenkins jobs config
+  copy:
+    remote_src: True
+    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins_jobs.ini
+    dest: /etc/jenkins_jobs/jenkins_jobs.ini
+    mode: 644
+
+- name: Clone Boto's repository
+  git: 
+    repo: git://github.com/boto/boto.git
+    dest: /home/vagrant/boto/
+
+- name: Install Boto
+  shell: cd /home/vagrant/boto && python setup.py install
+
+- name: Install AWSCLI
+  pip: name={{ item }} state=present
+  with_items:
+    - awscli
+    - boto3
+
+- name: Create AWS key
+  ec2_key:
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+    name: M3
+    region: "{{ lookup('env', 'AWS_REGION') }}"
+    state: present
+  register: ec2_i
+
+- name: Generate AWS private key
+  copy:
+    content: "{{ ec2_i.key.private_key }}"
+    dest: /home/vagrant/.ssh/aws.key
+    mode: 0600
+
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      GITHUB_NAME={{ GITHUB_NAME }}
+      GITHUB_EMAIL={{ GITHUB_EMAIL }}
+      GITHUB_USERNAME={{ GITHUB_USERNAME }}
+      GITHUB_PASSWORD={{ GITHUB_PASSWORD }}
+      MAIL_FROM={{ MAIL_FROM }}      
+      MAIL_USER={{ MAIL_USER }}
+      MAIL_PASSWORD={{ MAIL_PASSWORD }}
+      MAIL_SMTP={{ MAIL_SMTP }}
+      MONGO_USER={{ MONGO_USER }}
+      MONGO_PASSWORD={{ MONGO_PASSWORD }}
+      MONGO_IP={{ MONGO_IP }}
+      MONGO_PORT={{ MONGO_PORT }}
+      AWS_REGION={{ AWS_REGION }}
+      AWS_ACCESS_KEY={{ AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY={{ AWS_SECRET_KEY }}
+      AWS_KEY_PAIR={{ AWS_KEY_PAIR }}
+      AWS_SSH_KEY={{ AWS_SSH_KEY }}
+    create: yes
+    state: present

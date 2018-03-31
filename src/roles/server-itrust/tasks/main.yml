@@ -1,0 +1,63 @@
+---
+- name: Add repository for Java 8
+  apt_repository: 
+    repo: 'ppa:webupd8team/java' 
+    state: present
+
+- name: Set license selected for Oracle Java 8
+  shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+
+- name: Set license seen for Oracle Java 8
+  shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
+
+- name: Install Java 8
+  apt: 
+    name: oracle-java8-installer 
+    state: latest 
+    update-cache: yes
+
+- name: Get tomcat installation tar
+  get_url:
+    url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M27/bin/apache-tomcat-9.0.0.M27.tar.gz
+    dest: /opt
+
+- name: Unzip the tar
+  unarchive:
+    remote_src: yes
+    src: /opt/apache-tomcat-9.0.0.M27.tar.gz
+    dest: /opt
+
+- name: Rename the extracted tar
+  command: mv apache-tomcat-9.0.0.M27 tomcat9
+  args:
+    chdir: /opt
+
+- name: Set CATALINA_HOME environment variables
+  lineinfile:
+    path: /etc/environment
+    line: CATALINA_HOME="/opt/tomcat9"
+    state: present
+    insertafter: EOF
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
+- name: Copy tomcat config file
+  copy:
+    src: /home/vagrant/CSC519DevOps-Project/roles/server-itrust/files/tomcat-users.xml
+    dest: /opt/tomcat9/conf/tomcat-users.xml
+    mode: 0500
+
+- name: Copy latest WAR file to Tomcat's deployment folder
+  copy:
+    src: "{{ itrust_war }}"
+    dest: "/opt/tomcat9/webapps/itrust.war"
+
+- name: Shutdown Tomcat
+  shell: nohup sh /opt/tomcat9/bin/shutdown.sh
+
+- pause:
+    minutes: 1
+
+- name: Start Tomcat
+  shell: nohup sh /opt/tomcat9/bin/startup.sh

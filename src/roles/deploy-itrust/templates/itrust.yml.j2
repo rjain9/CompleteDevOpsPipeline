@@ -1,0 +1,80 @@
+- job:
+    block-downstream: false
+    block-upstream: false
+    builders:
+    - shell: |-
+        cd iTrust2
+        cp src/main/resources/hibernate.properties.template src/main/resources/hibernate.properties
+        cp src/main/java/db.properties.template src/main/java/db.properties
+        rm -rf src/main/java/email.properties
+        echo "from $mail_from" >> src/main/java/email.properties
+        echo "username $mail_username" >> src/main/java/email.properties
+        echo "password $mail_password" >> src/main/java/email.properties
+        echo "host $mail_host" >> src/main/java/email.properties
+        cp /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/pom-data.xml pom-data.xml
+        mvn -f pom-data.xml process-test-classes
+        mvn package
+    concurrent: false
+    description: Deployment Job for iTrust2-v2
+    disabled: false
+    display-name: iTrust2-v2
+    name: !!python/unicode 'itrust'
+    project-type: freestyle
+    properties:
+    - github:
+        url: https://github.ncsu.edu/oachary/iTrust2-v2/
+    publishers:
+    - post-tasks:
+      - escalate-status: true
+        matches:
+        - log-text: BUILD SUCCESS
+          operator: AND
+        run-if-job-successful: true
+        script: /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/deploy-itrust.sh
+    scm:
+    - git:
+        branches:
+        - '*/production'
+        credentials-id: github_credentials
+        local-branch: production
+        name: temp-repo
+        url: https://github.ncsu.edu/oachary/iTrust2-v2.git
+    triggers:
+    - github
+    - pollscm:
+        cron: '* * * * *'
+        ignore-post-commit-hooks: true
+    workspace: /home/vagrant/iTrust2-v2
+    wrappers:
+    - raw:
+        xml: |
+          <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+          <injectGlobalPasswords>false</injectGlobalPasswords>
+          <maskPasswordParameters>true</maskPasswordParameters>
+          <passwordEntries>
+          <EnvInjectPasswordEntry>
+          <name>github_username</name>
+          <value>{{github_username}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>github_password</name>
+          <value>{{github_password}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_from</name>
+          <value>{{mail_from}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_username</name>
+          <value>{{mail_username}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_password</name>
+          <value>{{mail_password}}</value>
+          </EnvInjectPasswordEntry>
+          <EnvInjectPasswordEntry>
+          <name>mail_host</name>
+          <value>{{mail_host}}</value>
+          </EnvInjectPasswordEntry>
+          </passwordEntries>
+          </EnvInjectPasswordWrapper>
