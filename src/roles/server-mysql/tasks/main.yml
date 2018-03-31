@@ -32,7 +32,7 @@
     state: reloaded
 
 - name: Export the current state of MySQL from jenkins server
-  local_action: "shell mysqldump itrust > /tmp/itrust.sql"
+  local_action: "shell mysqldump iTrust2 > /tmp/itrust.sql"
 
 - name: Copy the captured state to the server
   copy:
@@ -40,7 +40,7 @@
     dest: /tmp/itrust.sql
 
 - name: Create itrust database if it doesn't exist on MySQL server
-  command: mysql -u root --execute "CREATE DATABASE IF NOT EXISTS itrust;"
+  command: mysql -u root --execute "CREATE DATABASE IF NOT EXISTS iTrust2;"
 
 - name: Import the state of MySQL from jenkins server
-  shell: mysql itrust < /tmp/itrust.sql
+  shell: mysql iTrust2 < /tmp/itrust.sql
