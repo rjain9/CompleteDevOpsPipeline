@@ -88,7 +88,6 @@
 
 - name: Copy Jenkins' credentials file
   template:
-    remote_src: True
     src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/templates/credentials.xml.j2
     dest: /var/lib/jenkins/credentials.xml
     mode: 777
