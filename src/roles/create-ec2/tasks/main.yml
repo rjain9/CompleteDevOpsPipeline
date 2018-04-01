@@ -53,3 +53,6 @@
   template:
     src: mysql-context.xml.j2
     dest: "{{ local_templates }}mysql-context.xml"
+
+- name: Deploy MySQL server
+  shell: ansible-playbook -i /home/vagrant/templates/itrust_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mysql.yml

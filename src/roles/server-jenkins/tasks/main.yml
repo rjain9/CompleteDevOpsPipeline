@@ -44,7 +44,7 @@
     - python-pip
     - python3-pip
     - maven
-    - mysql-server
+    # - mysql-server
     - nginx
     - ansible
 
@@ -189,7 +189,7 @@
   blockinfile:
     path: /etc/environment
     block: |
-      GITHUB_NAME={{ GITHUB_NAME }}
+      GITHUB_NAME="{{ GITHUB_NAME }}"
       GITHUB_EMAIL={{ GITHUB_EMAIL }}
       GITHUB_USERNAME={{ GITHUB_USERNAME }}
       GITHUB_PASSWORD={{ GITHUB_PASSWORD }}

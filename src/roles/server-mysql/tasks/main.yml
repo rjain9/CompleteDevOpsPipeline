@@ -35,16 +35,16 @@
 # - name: Enable firewall
 #   shell: ufw enable
 
-- name: Export the current state of MySQL from jenkins server
-  local_action: "shell mysqldump iTrust2 > /tmp/itrust.sql"
+# - name: Export the current state of MySQL from jenkins server
+#   local_action: "shell mysqldump iTrust2 > /tmp/itrust.sql"
 
-- name: Copy the captured state to the server
-  copy:
-    src: /tmp/itrust.sql
-    dest: /tmp/itrust.sql
+# - name: Copy the captured state to the server
+#   copy:
+#     src: /tmp/itrust.sql
+#     dest: /tmp/itrust.sql
 
-- name: Create itrust database if it doesn't exist on MySQL server
-  command: mysql -u root --execute "CREATE DATABASE IF NOT EXISTS iTrust2;"
+# - name: Create itrust database if it doesn't exist on MySQL server
+#   command: mysql -u root --execute "CREATE DATABASE IF NOT EXISTS iTrust2;"
 
-- name: Import the state of MySQL from jenkins server
-  shell: mysql iTrust2 < /tmp/itrust.sql
+# - name: Import the state of MySQL from jenkins server
+#   shell: mysql iTrust2 < /tmp/itrust.sql

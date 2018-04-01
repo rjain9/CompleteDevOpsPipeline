@@ -1,17 +1,17 @@
 ---  
-- name: Add skip-grant-tables in my.cnf
-  blockinfile:
-    path: /etc/mysql/my.cnf
-    block:  |
-      [mysqld]
-      skip-grant-tables
-  become: true 
+# - name: Add skip-grant-tables in my.cnf
+#   blockinfile:
+#     path: /etc/mysql/my.cnf
+#     block:  |
+#       [mysqld]
+#       skip-grant-tables
+#   become: true 
 
-- name: Start MySQL service
-  service: 
-    name: mysql
-    state: restarted
-  become: yes
+# - name: Start MySQL service
+#   service: 
+#     name: mysql
+#     state: restarted
+#   become: yes
 
 - name: Set GitHub and Mail credentials
   set_fact:
