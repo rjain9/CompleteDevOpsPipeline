@@ -13,13 +13,13 @@
 		 			+ Change the database name to the correct name (depending on which server you're using)
 
 		Nothing else here needs to change during development.
-		Do NOT change the "name=jdbc/itrust"
+		Do NOT change the "name=jdbc/iTrust2"
 		-->
 <Resource
 	username="root"
 	password=""
-	url="jdbc:mysql://{{ mysql }}:3306/itrust?createDatabaseIfNotExist=true"
-	name="jdbc/itrust"
+	url="jdbc:mysql://{{ mysql }}:3306/iTrust2?createDatabaseIfNotExist=true"
+	name="jdbc/iTrust2"
 	auth="Container"
 	type="javax.sql.DataSource"
 	driverClassName="com.mysql.jdbc.Driver"
@@ -37,7 +37,7 @@
 	<Realm
 		className="org.apache.catalina.realm.DataSourceRealm"
 		localDataSource="true"
-	    dataSourceName="jdbc/itrust"
+	    dataSourceName="jdbc/iTrust2"
 		userTable="users"
 		userNameCol="MID"
 		userCredCol="Password"
