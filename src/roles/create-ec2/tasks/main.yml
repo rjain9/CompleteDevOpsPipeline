@@ -1,4 +1,19 @@
 ---
+- name: Create AWS key
+  ec2_key:
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+    name: M3
+    region: "{{ lookup('env', 'AWS_REGION') }}"
+    state: present
+  register: ec2_i
+
+- name: Generate AWS private key
+  copy:
+    content: "{{ ec2_i.key.private_key }}"
+    dest: /home/vagrant/.ssh/aws.key
+    mode: 0600
+
 - name: Create EC2 Instances
   local_action: ec2
                 image={{ image }}
