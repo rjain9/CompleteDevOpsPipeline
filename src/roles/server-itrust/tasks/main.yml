@@ -23,7 +23,7 @@
 
 - name: Clone iTrust repository
   git: 
-    repo: https://{{ GITHUB_USERNAME }}:{{ GITHUB_PASSWORD }}@github.ncsu.edu/oachary/iTrust2-v2.git 
+    repo: https://{{ lookup('env', 'GITHUB_USERNAME') }}:{{ lookup('env', 'GITHUB_PASSWORD') }}@github.ncsu.edu/oachary/iTrust2-v2.git 
     dest: /home/ubuntu/iTrust2-v2/
     version: production
 
