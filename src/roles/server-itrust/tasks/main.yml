@@ -21,6 +21,9 @@
     name: maven
     state: present
 
+- name: Remove old version of iTrust
+  shell: rm -rf /home/ubuntu/iTrust2-v2/
+
 - name: Clone iTrust repository
   git: 
     repo: https://{{ lookup('env', 'GITHUB_USERNAME') }}:{{ lookup('env', 'GITHUB_PASSWORD') }}@github.ncsu.edu/oachary/iTrust2-v2.git 
