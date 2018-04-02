@@ -1,4 +1,10 @@
 ---
+- name: Deploy MySQL server
+  hosts: mysql
+  become: yes 
+  roles:
+    - server-mysql
+
 - name: Deploy iTrust servers
   hosts: itrust
   serial: 1
