@@ -44,7 +44,7 @@
     - python-pip
     - python3-pip
     - maven
-    # - mysql-server
+    - mysql-server
     - nginx
     - ansible
 

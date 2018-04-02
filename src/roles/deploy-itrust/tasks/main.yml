@@ -1,17 +1,17 @@
 ---  
-# - name: Add skip-grant-tables in my.cnf
-#   blockinfile:
-#     path: /etc/mysql/my.cnf
-#     block:  |
-#       [mysqld]
-#       skip-grant-tables
-#   become: true 
+- name: Add skip-grant-tables in my.cnf
+  blockinfile:
+    path: /etc/mysql/my.cnf
+    block:  |
+      [mysqld]
+      skip-grant-tables
+  become: true 
 
-# - name: Start MySQL service
-#   service: 
-#     name: mysql
-#     state: restarted
-#   become: yes
+- name: Start MySQL service
+  service: 
+    name: mysql
+    state: restarted
+  become: yes
 
 - name: Set GitHub and Mail credentials
   set_fact:
@@ -21,6 +21,16 @@
     mail_user: "{{ MAIL_USER }}"
     mail_password: "{{ MAIL_PASSWORD }}"
     mail_smtp: "{{ MAIL_SMTP }}"
+
+- name: Create email.properties for iTrust
+  template:
+    src: email.properties.j2
+    dest: "{{ local_templates }}email.properties"
+
+- name: Create hibernate.properties for iTrust
+  template:
+    src: hibernate.properties.j2
+    dest: "{{ local_templates }}hibernate.properties"
 
 - name: Create iTrust's job file
   template:

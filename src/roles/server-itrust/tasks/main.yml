@@ -16,48 +16,85 @@
     state: latest 
     update-cache: yes
 
-- name: Get tomcat installation tar
-  get_url:
-    url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M27/bin/apache-tomcat-9.0.0.M27.tar.gz
-    dest: /opt
-
-- name: Unzip the tar
-  unarchive:
-    remote_src: yes
-    src: /opt/apache-tomcat-9.0.0.M27.tar.gz
-    dest: /opt
-
-- name: Rename the extracted tar
-  command: mv apache-tomcat-9.0.0.M27 tomcat9
-  args:
-    chdir: /opt
-
-- name: Set CATALINA_HOME environment variables
-  lineinfile:
-    path: /etc/environment
-    line: CATALINA_HOME="/opt/tomcat9"
+- name: Install Maven
+  apt: 
+    name: maven
     state: present
-    insertafter: EOF
 
-- name: Update the bash profile
-  shell: . /etc/environment
+- name: Clone iTrust repository
+  git: 
+    repo: https://{{ GITHUB_USERNAME }}:{{ GITHUB_PASSWORD }}@github.ncsu.edu/oachary/iTrust2-v2.git 
+    dest: /home/ubuntu/iTrust2-v2/
+    version: production
 
-- name: Copy tomcat config file
+- name: Modify Email properties file
   copy:
-    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-itrust/files/tomcat-users.xml
-    dest: /opt/tomcat9/conf/tomcat-users.xml
-    mode: 0500
+    src: /home/vagrant/templates/email.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/email.properties
 
-- name: Copy latest WAR file to Tomcat's deployment folder
+- name: Copy Database properties file
   copy:
-    src: "{{ itrust_war }}"
-    dest: "/opt/tomcat9/webapps/iTrust2.war"
+    remote_src: yes
+    src: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/db.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/email.properties
 
-- name: Shutdown Tomcat
-  shell: nohup sh /opt/tomcat9/bin/shutdown.sh
+- name: Modify Hibernate properties file
+  copy:
+    src: /home/vagrant/templates/hibernate.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties
 
-- pause:
-    minutes: 1
+- name: Generate Test Classes
+  command: bash -lc "mvn process-test-classes -f pom-data.xml"
+  args:
+    chdir: /home/ubuntu/iTrust2-v2/iTrust2/
 
-- name: Start Tomcat
-  shell: nohup sh /opt/tomcat9/bin/startup.sh
+- name: Start iTrust2 application
+  command: bash -lc "nohup mvn jetty:run &"
+  args:
+    chdir: /home/ubuntu/iTrust2-v2/iTrust2/
+
+# - name: Get tomcat installation tar
+#   get_url:
+#     url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M27/bin/apache-tomcat-9.0.0.M27.tar.gz
+#     dest: /opt
+
+# - name: Unzip the tar
+#   unarchive:
+#     remote_src: yes
+#     src: /opt/apache-tomcat-9.0.0.M27.tar.gz
+#     dest: /opt
+
+# - name: Rename the extracted tar
+#   command: mv apache-tomcat-9.0.0.M27 tomcat9
+#   args:
+#     chdir: /opt
+
+# - name: Set CATALINA_HOME environment variables
+#   lineinfile:
+#     path: /etc/environment
+#     line: CATALINA_HOME="/opt/tomcat9"
+#     state: present
+#     insertafter: EOF
+
+# - name: Update the bash profile
+#   shell: . /etc/environment
+
+# - name: Copy tomcat config file
+#   copy:
+#     src: /home/vagrant/CSC519DevOps-Project/src/roles/server-itrust/files/tomcat-users.xml
+#     dest: /opt/tomcat9/conf/tomcat-users.xml
+#     mode: 0500
+
+# - name: Copy latest WAR file to Tomcat's deployment folder
+#   copy:
+#     src: "{{ itrust_war }}"
+#     dest: "/opt/tomcat9/webapps/iTrust2.war"
+
+# - name: Shutdown Tomcat
+#   shell: nohup sh /opt/tomcat9/bin/shutdown.sh
+
+# - pause:
+#     seconds: 10
+
+# - name: Start Tomcat
+#   shell: nohup sh /opt/tomcat9/bin/startup.sh
