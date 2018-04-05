@@ -65,6 +65,11 @@
   args:
     chdir: /home/ubuntu/iTrust2-v2/iTrust2/
 
+- name: Wait for iTrust2 application to up
+  wait_for:
+    port: 8080
+    delay: 10
+
 # - name: Get tomcat installation tar
 #   get_url:
 #     url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M27/bin/apache-tomcat-9.0.0.M27.tar.gz
