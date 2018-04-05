@@ -63,3 +63,6 @@
   template:
     src: itrust_inventory.j2
     dest: "{{ local_templates }}itrust_inventory"
+
+- name: Deploy MySQL server
+  shell: ansible-playbook -i /home/vagrant/templates/itrust_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mysql.yml

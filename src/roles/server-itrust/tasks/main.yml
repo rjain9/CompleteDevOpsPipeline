@@ -1,4 +1,7 @@
 ---
+- name: Shutdown iTrust application (if up)
+  shell: sudo fuser -k 8080/tcp
+
 - name: Add repository for Java 8
   apt_repository: 
     repo: 'ppa:webupd8team/java' 
