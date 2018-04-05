@@ -1,6 +1,12 @@
 ---
+- name: Check if iTrust is already up
+  shell: sudo lsof -i:8080 | awk '{print $2}'
+  register: itrust_process
+
 - name: Shutdown iTrust application (if up)
-  shell: sudo fuser -k 8080/tcp
+  shell: "kill {{ item }}"
+  with_items: "{{ itrust_process.stdout_lines[1] }}"
+  when: itrust_process.stdout != ""
 
 - name: Add repository for Java 8
   apt_repository: 
