@@ -1,0 +1,54 @@
+---
+- name: Check if checkbox.io is already up
+  shell: sudo lsof -i:80 | awk '{print $2}'
+  register: checkbox_process
+
+- name: Shutdown checkbox.io application (if up)
+  shell: "kill {{ item }}"
+  with_items: "{{ checkbox_process.stdout_lines[1] }}"
+  when: checkbox_process.stdout != ""
+
+- name: Get NodeJS 9.x setup
+  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+
+- name: Install NodeJS
+  update_cache: yes
+  apt:
+    name: nodejs
+
+- name: Clone Checkbox repository
+  git: 
+    repo: https://github.com/chrisparnin/checkbox.io.git
+    dest: /home/vagrant/checkbox/
+
+- name: Copy Nginx configuration
+  copy: 
+    remote_src: yes
+    src: /home/vagrant/checkbox/local-conf/nginx.conf 
+    dest: /etc/nginx/nginx.conf
+
+- name: Copy Nginx default
+  copy:
+    remote_src: yes
+    src: /home/vagrant/checkbox/local-conf/default 
+    dest: /etc/nginx/sites-available/default
+
+- name: Modify Checkbox
+  replace:
+    path: /etc/nginx/sites-available/default
+    regexp: '/Users/gameweld/bitbucket/checkbox.io/checkbox.io/public_html/'
+    replace: '/home/vagrant/checkbox/public_html'
+
+- name: npm install
+  npm:
+    path: /home/vagrant/checkbox/server-side/site/
+
+- name: Restart Nginx services
+  service: 
+    name: nginx
+    state: restarted
+
+- name: Run Checkbox.io
+  command: bash -lc "nohup node server.js --coverage &"
+  args: 
+    chdir: /home/vagrant/checkbox/server-side/site/

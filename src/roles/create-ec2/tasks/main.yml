@@ -28,6 +28,7 @@
 - name: Get IPs of all EC2 instances
   set_fact:
     mysql: "{{ ec2.instances[0].public_ip }}"
+    mongo: "{{ ec2.instances[0].public_ip }}"
     host1: "{{ ec2.instances[1].public_ip }}"
     host2: "{{ ec2.instances[2].public_ip }}"
     host3: "{{ ec2.instances[3].public_ip }}"
@@ -66,3 +67,6 @@
 
 - name: Deploy MySQL server
   shell: sudo ansible-playbook -i /home/vagrant/templates/itrust_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mysql.yml
+
+- name: Deploy MongoDB server
+  shell: sudo ansible-playbook -i /home/vagrant/templates/checkbox_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mongo.yml

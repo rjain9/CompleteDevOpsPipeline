@@ -1,0 +1,6 @@
+---
+- name: Deploy MongoDB server
+  hosts: mongo
+  become: yes 
+  roles:
+    - server-mongo

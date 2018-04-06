@@ -16,3 +16,9 @@
   become: yes 
   roles:
     - deploy-itrust
+
+- name: Deploy checkbox.io
+  hosts: jenkins
+  become: yes 
+  roles:
+    - deploy-checkbox

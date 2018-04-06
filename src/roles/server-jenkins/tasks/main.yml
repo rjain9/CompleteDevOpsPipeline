@@ -37,6 +37,14 @@
     update_cache: yes
     state: present
 
+- name: Get NodeJS 9.x setup
+  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+
+- name: Install NodeJS
+  update_cache: yes
+  apt:
+    name: nodejs
+
 - name: Install packages [Git, Pip, Pip3, Maven, MySQL, Nginx, Ansible]
   apt: name={{ item }} state=present
   with_items:

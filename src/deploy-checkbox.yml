@@ -1,0 +1,7 @@
+---
+- name: Deploy checkbox.io servers
+  hosts: checkbox
+  serial: 1
+  become: yes 
+  roles:
+    - server-checkbox

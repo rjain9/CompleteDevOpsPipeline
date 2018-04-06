@@ -1,0 +1,39 @@
+---
+- name: Add Mongo ppa key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    state: present 
+
+- name: Add Mongo sources list
+  apt_repository:
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse"
+
+- name: Install MongoDB 3.6
+  update_cache: yes
+  apt:
+    name: mongodb-org
+
+- name: Install PyMongo
+  pip:
+    name: pymongo
+    version: 3.6.0
+    use_mirrors: no
+
+- name: Start MongoDB service
+  service: 
+    name: mongod 
+    state: started
+
+- name: Create MongoDB configuration
+  mongodb_user:
+    database: admin
+    user: "{{ MONGO_USER }}"
+    password: "{{ MONGO_PASSWORD }}"
+    roles: userAdminAnyDatabase,dbAdmin,readWriteAnyDatabase
+    state: present
+
+- name: Restart MongoDB services
+  service: 
+    name: mongod
+    state: restarted
