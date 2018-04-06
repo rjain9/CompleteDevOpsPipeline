@@ -9,10 +9,13 @@
   apt_repository:
     repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse"
 
-- name: Install MongoDB 3.6
+- name: Install packages [MongoDB, Pip, Pip3]
+  apt: name={{ item }} state=present
   update_cache: yes
-  apt:
-    name: mongodb-org
+  with_items:
+    - mongodb-org
+    - python-pip
+    - python3-pip
 
 - name: Install PyMongo
   pip:

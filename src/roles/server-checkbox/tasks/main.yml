@@ -16,6 +16,10 @@
   apt:
     name: nodejs
 
+- name: Install Nginx
+  apt:
+    name: nginx
+
 - name: Clone Checkbox repository
   git: 
     repo: https://github.com/chrisparnin/checkbox.io.git

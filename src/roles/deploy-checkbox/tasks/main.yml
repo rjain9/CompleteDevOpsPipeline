@@ -1,41 +1,8 @@
 ---  
-- name: Add skip-grant-tables in my.cnf
-  blockinfile:
-    path: /etc/mysql/my.cnf
-    block:  |
-      [mysqld]
-      skip-grant-tables
-  become: true 
-
-- name: Start MySQL service
-  service: 
-    name: mysql
-    state: restarted
-  become: yes
-
-- name: Set GitHub and Mail credentials
-  set_fact:
-    github_username: "{{ GITHUB_USERNAME }}"
-    github_password: "{{ GITHUB_PASSWORD }}"
-    mail_from: "{{ MAIL_FROM }}"
-    mail_user: "{{ MAIL_USER }}"
-    mail_password: "{{ MAIL_PASSWORD }}"
-    mail_smtp: "{{ MAIL_SMTP }}"
-
-- name: Create email.properties for iTrust
+- name: Create checkbox's job file
   template:
-    src: email.properties.j2
-    dest: "{{ local_templates }}email.properties"
-
-- name: Create hibernate.properties for iTrust
-  template:
-    src: hibernate.properties.j2
-    dest: "{{ local_templates }}hibernate.properties"
-
-- name: Create iTrust's job file
-  template:
-    src: itrust.yml.j2
-    dest: /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/itrust.yml
+    src: checkbox.yml.j2
+    dest: /home/vagrant/CSC519DevOps-Project/src/roles/deploy-checkbox/files/checkbox.yml
 
 - name: Create job on Jenkins using Jenkins Job Builder
-  command: jenkins-jobs update /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/itrust.yml
+  command: jenkins-jobs update /home/vagrant/CSC519DevOps-Project/src/roles/deploy-checkbox/files/checkbox.yml
