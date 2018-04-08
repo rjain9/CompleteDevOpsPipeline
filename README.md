@@ -1,4 +1,11 @@
-# CSC 519 DevOps - Project
+# Deployment
 
-### Milestone 1: [Config and Build](https://github.ncsu.edu/rjain9/CSC519DevOps-Project/tree/ConfigAndBuild)  
-### Milestone 2: [Test and Analysis](https://github.ncsu.edu/rjain9/CSC519DevOps-Project/tree/TestAnalysis)
+
+## Team Members
+
+| Name | Unity Id |
+| --- | --- |
+| Rishi Jain | rjain9 |
+| Omkar Acharya | oachary |
+| Shriyansh Yadav | scyadav |
+| Urmil Parikh | uparikh |
