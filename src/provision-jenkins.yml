@@ -1,4 +1,10 @@
 ---
+- name: Create EC2 instance for Jenkins
+  hosts: local
+  become: false
+  roles:
+    - ec2-jenkins
+
 - name: Provision Jenkins server
   hosts: jenkins
   become: yes 
@@ -9,7 +15,7 @@
   hosts: jenkins
   become: false
   roles:
-    - create-ec2
+    - ec2-app
 
 - name: Deploy iTrust
   hosts: jenkins

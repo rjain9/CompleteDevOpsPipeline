@@ -65,8 +65,8 @@
     src: itrust_inventory.j2
     dest: "{{ local_templates }}itrust_inventory"
 
-- name: Deploy MySQL server
-  shell: sudo ansible-playbook -i /home/vagrant/templates/itrust_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mysql.yml
+# - name: Deploy MySQL server
+#   shell: sudo ansible-playbook -i /home/vagrant/templates/itrust_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mysql.yml
 
 - name: Deploy MongoDB server
   shell: sudo ansible-playbook -i /home/vagrant/templates/checkbox_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mongo.yml
