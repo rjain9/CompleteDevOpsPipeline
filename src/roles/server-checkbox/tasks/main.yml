@@ -23,29 +23,29 @@
 - name: Clone Checkbox repository
   git: 
     repo: https://github.com/chrisparnin/checkbox.io.git
-    dest: /home/vagrant/checkbox/
+    dest: /home/ubuntu/checkbox/
 
 - name: Copy Nginx configuration
   copy: 
     remote_src: yes
-    src: /home/vagrant/checkbox/local-conf/nginx.conf 
+    src: /home/ubuntu/checkbox/local-conf/nginx.conf 
     dest: /etc/nginx/nginx.conf
 
 - name: Copy Nginx default
   copy:
     remote_src: yes
-    src: /home/vagrant/checkbox/local-conf/default 
+    src: /home/ubuntu/checkbox/local-conf/default 
     dest: /etc/nginx/sites-available/default
 
 - name: Modify Checkbox
   replace:
     path: /etc/nginx/sites-available/default
     regexp: '/Users/gameweld/bitbucket/checkbox.io/checkbox.io/public_html/'
-    replace: '/home/vagrant/checkbox/public_html'
+    replace: '/home/ubuntu/checkbox/public_html'
 
 - name: npm install
   npm:
-    path: /home/vagrant/checkbox/server-side/site/
+    path: /home/ubuntu/checkbox/server-side/site/
 
 - name: Restart Nginx services
   service: 
@@ -55,7 +55,7 @@
 - name: Run Checkbox.io
   command: bash -lc "nohup node server.js --coverage &"
   args: 
-    chdir: /home/vagrant/checkbox/server-side/site/
+    chdir: /home/ubuntu/checkbox/server-side/site/
 
 - name: Wait for checkbox.io application to up
   wait_for:

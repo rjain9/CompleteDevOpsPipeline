@@ -8,7 +8,7 @@
         cp src/main/java/db.properties.template src/main/java/db.properties
         rm -rf src/main/java/email.properties
         printf "from $from\nusername $mail_username\npassword $password\nhost $mail_host" > src/main/java/email.properties
-        cp /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/pom-data.xml pom-data.xml
+        cp /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-itrust/files/pom-data.xml pom-data.xml
         mvn -f pom-data.xml process-test-classes
         mvn test
     concurrent: false
@@ -27,7 +27,7 @@
         - log-text: BUILD SUCCESS
           operator: AND
         run-if-job-successful: true
-        script: /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/deploy-itrust.sh
+        script: /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-itrust/files/deploy-itrust.sh
     scm:
     - git:
         branches:
@@ -41,7 +41,7 @@
     - pollscm:
         cron: '* * * * *'
         ignore-post-commit-hooks: true
-    workspace: /home/vagrant/iTrust2-v2
+    workspace: /home/ubuntu/iTrust2-v2
     wrappers:
     - raw:
         xml: |

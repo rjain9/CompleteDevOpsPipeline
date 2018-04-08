@@ -11,7 +11,7 @@
 - name: Generate AWS private key
   copy:
     content: "{{ ec2_i.key.private_key }}"
-    dest: /home/vagrant/.ssh/aws.key
+    dest: /home/ubuntu/.ssh/aws.key
     mode: 0600
 
 - name: Create EC2 Instances
@@ -66,7 +66,7 @@
     dest: "{{ local_templates }}itrust_inventory"
 
 # - name: Deploy MySQL server
-#   shell: sudo ansible-playbook -i /home/vagrant/templates/itrust_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mysql.yml
+#   shell: sudo ansible-playbook -i /home/ubuntu/templates/itrust_inventory /home/ubuntu/CSC519DevOps-Project/src/deploy-mysql.yml
 
 - name: Deploy MongoDB server
-  shell: sudo ansible-playbook -i /home/vagrant/templates/checkbox_inventory /home/vagrant/CSC519DevOps-Project/src/deploy-mongo.yml
+  shell: sudo ansible-playbook -i /home/ubuntu/templates/checkbox_inventory /home/ubuntu/CSC519DevOps-Project/src/deploy-mongo.yml

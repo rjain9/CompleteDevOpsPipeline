@@ -41,7 +41,7 @@
 
 - name: Modify Email properties file
   copy:
-    src: /home/vagrant/templates/email.properties
+    src: /home/ubuntu/templates/email.properties
     dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/email.properties
 
 - name: Copy Database properties file
@@ -52,7 +52,7 @@
 
 - name: Modify Hibernate properties file
   copy:
-    src: /home/vagrant/templates/hibernate.properties
+    src: /home/ubuntu/templates/hibernate.properties
     dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties
 
 - name: Generate Test Classes
@@ -98,7 +98,7 @@
 
 # - name: Copy tomcat config file
 #   copy:
-#     src: /home/vagrant/CSC519DevOps-Project/src/roles/server-itrust/files/tomcat-users.xml
+#     src: /home/ubuntu/CSC519DevOps-Project/src/roles/server-itrust/files/tomcat-users.xml
 #     dest: /opt/tomcat9/conf/tomcat-users.xml
 #     mode: 0500
 

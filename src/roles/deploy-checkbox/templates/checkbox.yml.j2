@@ -20,7 +20,7 @@
         - log-text:  
           operator: AND
         run-if-job-successful: true
-        script: /home/vagrant/CSC519DevOps-Project/src/roles/deploy-checkbox/files/deploy-checkbox.sh
+        script: /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-checkbox/files/deploy-checkbox.sh
     scm:
     - git:
         branches:
@@ -31,5 +31,5 @@
     - pollscm:
         cron: '* * * * *'
         ignore-post-commit-hooks: false
-    workspace: /home/vagrant/checkbox
+    workspace: /home/ubuntu/checkbox
     wrappers: []

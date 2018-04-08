@@ -35,7 +35,7 @@
 - name: Create iTrust's job file
   template:
     src: itrust.yml.j2
-    dest: /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/itrust.yml
+    dest: /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-itrust/files/itrust.yml
 
 - name: Create job on Jenkins using Jenkins Job Builder
-  command: jenkins-jobs update /home/vagrant/CSC519DevOps-Project/src/roles/deploy-itrust/files/itrust.yml
+  command: jenkins-jobs update /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-itrust/files/itrust.yml

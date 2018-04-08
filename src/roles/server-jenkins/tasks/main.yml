@@ -59,11 +59,11 @@
 - name: Clone Milestone repository
   git: 
     repo: https://{{ GITHUB_USERNAME }}:{{ GITHUB_PASSWORD }}@github.ncsu.edu/rjain9/CSC519DevOps-Project.git
-    dest: /home/vagrant/CSC519DevOps-Project
+    dest: /home/ubuntu/CSC519DevOps-Project
     version: dev-omkar
 
 - name: Correct GitHub repository permissions
-  shell: chmod -R 777 /home/vagrant/CSC519DevOps-Project
+  shell: chmod -R 777 /home/ubuntu/CSC519DevOps-Project
 
 - name: Set GitHub and Mail credentials
   set_fact:
@@ -73,7 +73,7 @@
 - name: Copy Jenkins' config file
   copy:
     remote_src: True
-    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins
+    src: /home/ubuntu/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins
     dest: /etc/default/jenkins
     mode: 777
 
@@ -90,7 +90,7 @@
 - name: Copy Jenkins' config file
   copy:
     remote_src: True
-    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins_config.xml
+    src: /home/ubuntu/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins_config.xml
     dest: /var/lib/jenkins/config.xml
     mode: 777
 
@@ -160,17 +160,17 @@
 - name: Copy Jenkins jobs config
   copy:
     remote_src: True
-    src: /home/vagrant/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins_jobs.ini
+    src: /home/ubuntu/CSC519DevOps-Project/src/roles/server-jenkins/files/jenkins_jobs.ini
     dest: /etc/jenkins_jobs/jenkins_jobs.ini
     mode: 644
 
 - name: Clone Boto's repository
   git: 
     repo: git://github.com/boto/boto.git
-    dest: /home/vagrant/boto/
+    dest: /home/ubuntu/boto/
 
 - name: Install Boto
-  shell: cd /home/vagrant/boto && python setup.py install
+  shell: cd /home/ubuntu/boto && python setup.py install
 
 - name: Install AWSCLI
   pip: name={{ item }} state=present
