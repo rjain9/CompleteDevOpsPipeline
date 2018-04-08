@@ -34,7 +34,7 @@
     host3: "{{ ec2.instances[3].public_ip }}"
     host4: "{{ ec2.instances[4].public_ip }}"
     host5: "{{ ec2.instances[5].public_ip }}"
-    aws_key: "{{ AWS_SSH_KEY }}"
+    aws_key: /home/ubuntu/.ssh/aws.key
 
 - name: Wait for SSH to come up
   wait_for: 
