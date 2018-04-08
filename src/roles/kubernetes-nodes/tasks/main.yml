@@ -1,0 +1,30 @@
+---
+- name: Install Apt Transport HTTPS
+  apt:
+    name: apt-transport-https
+    update_cache: yes
+
+- name: Curl
+  shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+- name: Add Kubernetes package
+  apt_repository:
+    repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+    state: present
+
+- name: Install Docker
+  apt:
+    name: docker.io
+
+- name: Install Kubernetes
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+  vars:
+    packages:
+    - kubelet 
+    - kubeadm 
+    - kubectl
+
+- name: Add Kubernetes node
+  shell: kubeadm join {{ hostvars['master1']['kubernetes_ip'] }}:6443 --token {{ hostvars['master1']['kubernetes_token'] }} --discovery-token-unsafe-skip-ca-verification

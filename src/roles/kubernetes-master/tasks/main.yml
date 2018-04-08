@@ -1,0 +1,56 @@
+---
+- name: Install Apt Transport HTTPS
+  apt:
+    name: apt-transport-https
+    update_cache: yes
+
+- name: Curl
+  shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+- name: Add Kubernetes package
+  apt_repository:
+    repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+    state: present
+
+- name: Install Docker
+  apt:
+    name: docker.io
+
+- name: Install Kubernetes
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+  vars:
+    packages:
+    - kubelet 
+    - kubeadm 
+    - kubectl
+
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      KUBECONFIG=/etc/kubernetes/admin.conf
+    create: yes
+    state: present
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
+- name: Create Kubernetes cluster
+  shell: kubeadm init
+
+- name: Install Weave
+  shell: kubectl apply -f https://git.io/weave-kube-1.6
+
+- name: Get Kubernetes token
+  shell: kubeadm token list
+  register: kub_token
+
+- name: Set Kubernetes token
+  set_fact:
+    kubernetes_token: "{{ kub_token.stdout_lines[1][:23] }}"
+
+- name: Set Kubernetes Master's IP
+  set_fact:
+    kubernetes_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"

@@ -1,0 +1,18 @@
+---
+- name: Provision Kubernetes
+  hosts: master
+  roles:
+    - kubernetes-master
+  become: yes
+
+- name: Provision Kubernetes
+  hosts: nodes
+  roles:
+    - kubernetes-nodes
+  become: yes
+
+- name: Provision Kubernetes
+  hosts: master
+  roles:
+    - kubernetes-checkbox
+  become: yes
