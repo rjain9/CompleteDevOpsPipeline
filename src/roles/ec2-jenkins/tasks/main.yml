@@ -14,6 +14,20 @@
     dest: ~/.ssh/jenkins.key
     mode: 0600
 
+- name: Example EC2 group
+  ec2_group:
+    name: "{{ security_group }}"
+    description: Milestone3
+    vpc_id: vpc-387fd250
+    region: "{{ AWS_REGION }}"
+    aws_secret_key: "{{ AWS_SECRET_KEY }}"
+    aws_access_key: "{{ AWS_ACCESS_KEY }}"
+    rules:
+      - proto: tcp
+        from_port: 0
+        to_port: 65535
+        cidr_ip: 0.0.0.0/0
+
 - name: Create EC2 Instance
   local_action: ec2
                 image={{ image }}
