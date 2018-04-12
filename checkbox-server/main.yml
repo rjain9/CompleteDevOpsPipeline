@@ -1,13 +1,38 @@
 ---
-- name: Create an EC2 instance for Checkbox server
-  hosts: local
-  connection: local
-  become: false
-  roles:
-    - aws
+# - name: Create an EC2 instance for Checkbox server
+#   hosts: local
+#   connection: local
+#   become: false
+#   roles:
+#     - aws
 
-- hosts: checkbox
-  roles: 
+- hosts: all
+  gather_facts: no
+  gather_facts: no
+  pre_tasks:
+  - name: Install python for Ansible
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    changed_when: False
+    become: yes
+
+- hosts: prod
+  gather_facts: no
+  roles:  
+  - nodejs 
   - dependencies
   - repo&config
   - run
+
+- hosts: canary
+  gather_facts: no
+  roles:  
+  - nodejs 
+  - dependencies
+  - repo&config
+  - run
+
+- hosts: load
+  gather_facts: no
+  roles:   
+  - nodejs
+  - mongodb

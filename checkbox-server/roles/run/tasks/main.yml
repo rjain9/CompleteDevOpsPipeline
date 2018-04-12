@@ -1,9 +1,8 @@
-- name: start the mongod service
+- name: start the nginx service
   service: 
     name: '{{ item }}'
     state: restarted
   with_items:
-    - mongod
     - nginx
   become: yes
   
