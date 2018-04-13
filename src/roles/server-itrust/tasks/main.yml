@@ -58,8 +58,7 @@
 
 - name: Copy Database properties file
   copy:
-    remote_src: yes
-    src: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/db.properties.template
+    src: /home/ubuntu/templates/db.properties
     dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/db.properties
 
 - name: Modify Hibernate properties file

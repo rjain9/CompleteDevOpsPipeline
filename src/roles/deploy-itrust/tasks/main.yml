@@ -27,6 +27,11 @@
     src: email.properties.j2
     dest: "{{ local_templates }}email.properties"
 
+- name: Create db.properties for iTrust
+  template:
+    src: db.properties.j2
+    dest: "{{ local_templates }}db.properties"
+
 - name: Create hibernate.properties for iTrust
   template:
     src: hibernate.properties.j2
