@@ -1,4 +1,16 @@
 ---
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      GITHUB_USERNAME={{ lookup('env', 'GITHUB_USERNAME') }}
+      GITHUB_PASSWORD={{ lookup('env', 'GITHUB_PASSWORD') }}
+    create: yes
+    state: present
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
 - name: Check if iTrust is already up
   shell: sudo lsof -i:8080 | awk '{print $2}'
   register: itrust_process
