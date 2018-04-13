@@ -45,7 +45,7 @@
   apt:
     name: nodejs
 
-- name: Install packages [Git, Pip, Pip3, Maven, MySQL, Nginx, Ansible]
+- name: Install packages [Git, Pip, Pip3, Maven, MySQL, Ansible]
   apt: name={{ item }} state=present
   with_items:
     - git
@@ -53,7 +53,6 @@
     - python3-pip
     - maven
     - mysql-server
-    - nginx
     - ansible
 
 - name: Clone Milestone repository
@@ -204,3 +203,8 @@
 
 - name: Update the bash profile
   shell: . /etc/environment
+
+- name: Restart Jenkins
+  service:
+    name: jenkins 
+    state: restarted
