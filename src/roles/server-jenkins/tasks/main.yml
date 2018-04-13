@@ -105,6 +105,33 @@
     regexp: '^JENKINS_USER=\$NAME' 
     replace: 'JENKINS_USER="root"'
 
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      GITHUB_NAME="{{ GITHUB_NAME }}"
+      GITHUB_EMAIL={{ GITHUB_EMAIL }}
+      GITHUB_USERNAME={{ GITHUB_USERNAME }}
+      GITHUB_PASSWORD={{ GITHUB_PASSWORD }}
+      MAIL_FROM={{ MAIL_FROM }}      
+      MAIL_USER={{ MAIL_USER }}
+      MAIL_PASSWORD={{ MAIL_PASSWORD }}
+      MAIL_SMTP={{ MAIL_SMTP }}
+      MONGO_USER={{ MONGO_USER }}
+      MONGO_PASSWORD={{ MONGO_PASSWORD }}
+      MONGO_IP={{ MONGO_IP }}
+      MONGO_PORT={{ MONGO_PORT }}
+      AWS_REGION={{ AWS_REGION }}
+      AWS_ACCESS_KEY={{ AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY={{ AWS_SECRET_KEY }}
+      AWS_KEY_PAIR={{ AWS_KEY_PAIR }}
+      AWS_SSH_KEY={{ AWS_SSH_KEY }}
+    create: yes
+    state: present
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
 - name: Restart Jenkins
   service:
     name: jenkins 
@@ -176,35 +203,3 @@
   with_items:
     - awscli
     - boto3
-
-- name: Set environment variables
-  blockinfile:
-    path: /etc/environment
-    block: |
-      GITHUB_NAME="{{ GITHUB_NAME }}"
-      GITHUB_EMAIL={{ GITHUB_EMAIL }}
-      GITHUB_USERNAME={{ GITHUB_USERNAME }}
-      GITHUB_PASSWORD={{ GITHUB_PASSWORD }}
-      MAIL_FROM={{ MAIL_FROM }}      
-      MAIL_USER={{ MAIL_USER }}
-      MAIL_PASSWORD={{ MAIL_PASSWORD }}
-      MAIL_SMTP={{ MAIL_SMTP }}
-      MONGO_USER={{ MONGO_USER }}
-      MONGO_PASSWORD={{ MONGO_PASSWORD }}
-      MONGO_IP={{ MONGO_IP }}
-      MONGO_PORT={{ MONGO_PORT }}
-      AWS_REGION={{ AWS_REGION }}
-      AWS_ACCESS_KEY={{ AWS_ACCESS_KEY }}
-      AWS_SECRET_KEY={{ AWS_SECRET_KEY }}
-      AWS_KEY_PAIR={{ AWS_KEY_PAIR }}
-      AWS_SSH_KEY={{ AWS_SSH_KEY }}
-    create: yes
-    state: present
-
-- name: Update the bash profile
-  shell: . /etc/environment
-
-- name: Restart Jenkins
-  service:
-    name: jenkins 
-    state: restarted
