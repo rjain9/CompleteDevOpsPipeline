@@ -15,24 +15,25 @@
 #     changed_when: False
 #     become: yes
 
-# - hosts: prod
-#   gather_facts: no
-#   roles:  
-#   - nodejs 
-#   - dependencies
-#   - repo&config
-#   - run
-
-# - hosts: canary
-#   gather_facts: no
-#   roles:  
-#   - nodejs 
-#   - dependencies
-#   - repo&config
-#   - run
-
-- hosts: load
+- hosts: prod
   gather_facts: no
-  roles:   
-  # - nodejs
-  - mongodb
+  roles:  
+  - nodejs 
+  - dependencies
+  - repo&config
+  - run
+
+- hosts: canary
+  gather_facts: no
+  roles:  
+  - nodejs 
+  - dependencies
+  - repo&config
+  - run
+
+# - hosts: load
+#   gather_facts: no
+#   roles:   
+#   # - nodejs
+#   # - mongodb
+#   - loadbalancer

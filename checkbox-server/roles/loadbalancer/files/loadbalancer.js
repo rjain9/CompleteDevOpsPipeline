@@ -22,11 +22,9 @@ app.use(function(req, res, next)
 	proxy.web( req, res, {target: 'http://'+server+":"+port } );
 });
 
-
-
 setInterval(function(){
-	request('http://192.168.33.3:80/api/appStatus',{timeout: 1500}, function(err,res,body){
-		if(!res || res.statusCode == 500){
+	request('http://192.168.33.3:80/api/study',{timeout: 1500}, function(err,res,body){
+		if(!res || res.statusCode != 200){
 			console.log("canary server is down");
 			alert = true;
 		}
@@ -36,7 +34,6 @@ setInterval(function(){
 		}
 	});
 },2000);
-
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;

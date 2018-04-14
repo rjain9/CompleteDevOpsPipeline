@@ -1,0 +1,8 @@
+- name: 
+  copy:
+    src: ../roles/loadbalancer/files/'{{ item }}' 
+    dest: /home/ubuntu/checkbox/
+  with_items:
+  - loadbalancer.js
+  - package.json
+  become: yes
