@@ -41,3 +41,7 @@
   npm:
     path: /home/ubuntu/checkbox/server-side/site/
   become: yes
+
+- name: "Install forever (to run Node.js app)."
+  npm: name=forever global=yes state=present
+  become: yes

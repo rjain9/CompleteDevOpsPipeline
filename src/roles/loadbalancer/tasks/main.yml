@@ -2,8 +2,8 @@
 - name: Copy load balancer script
   copy:
     remote_src: yes
-    src: /home/ubuntu/CSC519DevOps-Project/src/roles/loadbalancer/files/"{{ item }}"
-    dest: /home/ubuntu/loadbalancer/"{{ item }}"
+    src: /home/ubuntu/CSC519DevOps-Project/src/roles/loadbalancer/files/{{ item }}
+    dest: /home/ubuntu/loadbalancer/{{ item }}
     force: yes
   with_items:
   - loadbalancer.js
