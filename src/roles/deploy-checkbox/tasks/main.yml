@@ -1,4 +1,20 @@
 ---  
+- name: Set MongoDB IP
+  blockinfile:
+    path: /etc/environment
+    block: |
+      MONGO_IP={{ mongo }}
+    create: yes
+    state: present
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
+- name: Restart Jenkins
+  service:
+    name: jenkins 
+    state: restarted
+
 - name: Create checkbox's job file
   template:
     src: checkbox.yml.j2
