@@ -5,7 +5,7 @@
   become: yes
   
 - name: Run Checkbox.io
-  command: bash -lc "nohup node server.js &"
+  command: nohup node server.js &
   args: 
     chdir: /home/ubuntu/checkbox/server-side/site/
   environment:
@@ -16,6 +16,7 @@
     MAIL_USER: "{{ MAIL_USER }}"
     MAIL_PASSWORD: "{{ MAIL_PASSWORD }}"
     MAIL_SMTP: "{{ MAIL_SMTP }}"
+  become: yes
 
 - name: Wait for checkbox.io application to up
   wait_for:

@@ -1,11 +1,13 @@
 - name: Check if checkbox.io is already up
   shell: sudo lsof -i:80 | awk '{print $2}'
   register: checkbox_process
+  become: yes
 
 - name: Shutdown checkbox.io application (if up)
   shell: "kill {{ item }}"
   with_items: "{{ checkbox_process.stdout_lines[1] }}"
   when: checkbox_process.stdout != ""
+  become: yes
 
 - name: git clone
   git: 

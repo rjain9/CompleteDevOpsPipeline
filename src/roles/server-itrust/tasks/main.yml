@@ -5,6 +5,10 @@
     block: |
       GITHUB_USERNAME={{ lookup('env', 'GITHUB_USERNAME') }}
       GITHUB_PASSWORD={{ lookup('env', 'GITHUB_PASSWORD') }}
+      MAIL_FROM={{ lookup('env', 'MAIL_FROM') }}
+      MAIL_USER={{ lookup('env', 'MAIL_USER') }}
+      MAIL_PASSWORD={{ lookup('env', 'MAIL_PASSWORD') }}
+      MAIL_SMTP={{ lookup('env', 'MAIL_SMTP') }}
     create: yes
     state: present
 
