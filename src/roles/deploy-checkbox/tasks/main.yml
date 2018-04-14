@@ -15,6 +15,11 @@
     name: jenkins 
     state: restarted
 
+- name: Wait for Jenkins to restart
+  wait_for:
+    port: "{{ jenkins_port }}"
+    delay: "{{ jenkins_delay }}"
+
 - name: Create checkbox's job file
   template:
     src: checkbox.yml.j2
