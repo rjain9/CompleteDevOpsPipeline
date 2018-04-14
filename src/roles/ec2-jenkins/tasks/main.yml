@@ -27,6 +27,10 @@
         from_port: 0
         to_port: 65535
         cidr_ip: 0.0.0.0/0
+      - proto: icmp
+        from_port: 0
+        to_port: 65535
+        cidr_ip: 0.0.0.0/0
 
 - name: Create EC2 Instance
   local_action: ec2
