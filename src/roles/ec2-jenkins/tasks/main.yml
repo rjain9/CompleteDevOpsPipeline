@@ -14,7 +14,7 @@
     dest: ~/.ssh/jenkins.key
     mode: 0600
 
-- name: Example EC2 group
+- name: Create EC2 Security Group
   ec2_group:
     name: "{{ security_group }}"
     description: Milestone3
