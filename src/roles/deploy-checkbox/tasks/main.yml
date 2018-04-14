@@ -1,11 +1,11 @@
 ---  
 - name: Set MongoDB IP
-  blockinfile:
-    path: /etc/environment
-    block: |
-      MONGO_IP={{ mongo }}
+  lineinfile:
+    dest: /etc/environment
+    line: "MONGO_IP={{ mongo }}"
     create: yes
     state: present
+    insertafter: EOF
 
 - name: Update the bash profile
   shell: . /etc/environment
