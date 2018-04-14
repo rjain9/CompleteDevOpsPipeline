@@ -1,0 +1,23 @@
+- name: Start the nginx service
+  service: 
+    name: nginx
+    state: restarted
+  become: yes
+  
+- name: Run Checkbox.io
+  command: bash -lc "nohup node server.js &"
+  args: 
+    chdir: /home/ubuntu/checkbox/server-side/site/
+  environment:
+    MONGO_PORT: "{{ MONGO_PORT }}"
+    MONGO_IP: "{{ MONGO_IP }}"
+    MONGO_USER: "{{ MONGO_USER }}"
+    MONGO_PASSWORD: "{{ MONGO_PASSWORD }}"
+    MAIL_USER: "{{ MAIL_USER }}"
+    MAIL_PASSWORD: "{{ MAIL_PASSWORD }}"
+    MAIL_SMTP: "{{ MAIL_SMTP }}"
+
+- name: Wait for checkbox.io application to up
+  wait_for:
+    port: 80
+    delay: 10
