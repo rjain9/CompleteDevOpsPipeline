@@ -1,4 +1,7 @@
 ---
+- name: Create load balancer directory
+  file: path=/home/ubuntu/loadbalancer state=directory
+
 - name: Copy load balancer script
   copy:
     remote_src: yes
