@@ -21,6 +21,9 @@
     state: present
   become: yes
 
+- name: Update the bash profile
+  shell: . /etc/environment
+
 - name: git clone
   git: 
     repo: https://github.com/rjain9/checkbox.io.git
