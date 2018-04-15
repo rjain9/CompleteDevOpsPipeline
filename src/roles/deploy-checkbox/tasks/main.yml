@@ -1,4 +1,7 @@
 ---  
+- name: Provision checkbox.io (Production + Canary)
+  shell: sudo ansible-playbook -i /home/ubuntu/templates/checkbox_inventory /home/ubuntu/CSC519DevOps-Project/src/provision-checkbox.yml
+
 - name: Set MongoDB IP
   lineinfile:
     dest: /etc/environment
