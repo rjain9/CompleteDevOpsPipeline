@@ -10,6 +10,12 @@
 | Shriyansh Yadav | scyadav |
 | Urmil Parikh | uparikh |
 
+## Screencast:  
+
+### [Checkbox Deployment and Canary Release]()  
+### [iTrust Deployment and Rolling Update]() 
+### [Kubernetes Cluster]()
+### [Redis Feature Flag]()
 
 ## Deployment
 
