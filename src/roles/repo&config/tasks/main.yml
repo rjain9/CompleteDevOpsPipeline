@@ -11,8 +11,9 @@
 
 - name: git clone
   git: 
-    repo: https://github.com/chrisparnin/checkbox.io.git
+    repo: https://github.com/rjain9/checkbox.io.git
     dest: /home/ubuntu/checkbox/
+    version: production
     force: yes
   become: yes
 
