@@ -1,5 +1,5 @@
 {
-  "name": "vagrant_data",
+  "name": "loadbalance",
   "version": "1.0.0",
   "description": "",
   "main": "loadbalancer.js",
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "fs": "0.0.1-security",
     "http-proxy": "^1.16.2",
     "request": "^2.85.0"
   }
