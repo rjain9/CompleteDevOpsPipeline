@@ -75,6 +75,11 @@
   args:
     chdir: /home/ubuntu/iTrust2-v2/iTrust2/
 
+- name: Copy Database properties file
+  copy:
+    src: /home/ubuntu/templates/db.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/target/classes/db.properties
+
 - name: Start iTrust2 application
   command: bash -lc "nohup mvn jetty:run &"
   args:
