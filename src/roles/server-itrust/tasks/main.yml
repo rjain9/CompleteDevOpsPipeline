@@ -1,16 +1,18 @@
 ---
 - name: Set environment variables
-  blockinfile:
-    path: /etc/environment
-    block: |
-      GITHUB_USERNAME={{ lookup('env', 'GITHUB_USERNAME') }}
-      GITHUB_PASSWORD={{ lookup('env', 'GITHUB_PASSWORD') }}
-      MAIL_FROM={{ lookup('env', 'MAIL_FROM') }}
-      MAIL_USER={{ lookup('env', 'MAIL_USER') }}
-      MAIL_PASSWORD={{ lookup('env', 'MAIL_PASSWORD') }}
-      MAIL_SMTP={{ lookup('env', 'MAIL_SMTP') }}
+  lineinfile:
+    dest: /etc/environment
+    line: "{{ item }}"
     create: yes
     state: present
+    insertafter: EOF
+  with_items:
+  - GITHUB_USERNAME={{ lookup('env', 'GITHUB_USERNAME') }}
+  - GITHUB_PASSWORD={{ lookup('env', 'GITHUB_PASSWORD') }}
+  - MAIL_FROM={{ lookup('env', 'MAIL_FROM') }}
+  - MAIL_USER={{ lookup('env', 'MAIL_USER') }}
+  - MAIL_PASSWORD={{ lookup('env', 'MAIL_PASSWORD') }}
+  - MAIL_SMTP={{ lookup('env', 'MAIL_SMTP') }}
 
 - name: Update the bash profile
   shell: . /etc/environment
