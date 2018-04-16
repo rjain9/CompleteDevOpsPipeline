@@ -7,9 +7,12 @@
 - name: Correct templates directory permissions
   shell: chmod -R 777 "{{ local_templates }}"
 
+- debug:
+    msg: "{{ hostvars[inventory_hostname]['inventory_hostname'] }}"
+
 - name: Get Jenkins IP
   set_fact:
-    jenkins_server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    jenkins_server: "{{ hostvars[inventory_hostname]['inventory_hostname'] }}"
 
 - name: Create redis client script
   template:
