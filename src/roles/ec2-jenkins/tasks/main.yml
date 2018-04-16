@@ -58,9 +58,7 @@
     jenkins_server: "{{ ec2.instances[0].public_ip }}"
 
 - name: Create local templates directory
-  file:
-    path: "{{ local_templates }}"
-    state: directory
+  shell: "mkdir {{ local_templates }}"
 
 - name: Create redis client script
   template:
