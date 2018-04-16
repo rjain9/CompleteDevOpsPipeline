@@ -53,6 +53,12 @@
     replace: '/home/ubuntu/checkbox/public_html'
   become: yes
 
+- name: Update server.js with redis feature flags
+  copy:
+    src: /home/ubuntu/templates/server.js
+    dest: /home/ubuntu/checkbox/server-side/site/server.js
+  become: yes
+
 - name: npm Install
   npm:
     path: /home/ubuntu/checkbox/server-side/site/

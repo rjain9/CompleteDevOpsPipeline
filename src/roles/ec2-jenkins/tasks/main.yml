@@ -52,3 +52,17 @@
     port: 22
     timeout: 320
     state: started
+
+- name: Get IPs of all EC2 instances
+  set_fact:
+    jenkins_server: "{{ ec2.instances[0].public_ip }}"
+
+- name: Create redis client script
+  template:
+    src: client_redis.yml.j2
+    dest: "{{ redis_client_role }}/tasks/main.yml"
+
+- name: Create updated checkbox server script
+  template:
+    src: checkbox_server.js.j2
+    dest: "{{ local_templates }}server.js"

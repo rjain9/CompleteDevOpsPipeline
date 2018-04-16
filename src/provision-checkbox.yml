@@ -1,5 +1,5 @@
 ---
-- name: Deploy checkbox.io canary server
+- name: Deploy checkbox.io servers
   hosts: checkbox
   vars:
     MONGO_PORT: "{{ lookup('env', 'MONGO_PORT') }}"
@@ -12,5 +12,6 @@
   roles:  
   - nodejs 
   - dependencies
+  - client-redis
   - repo&config
   - run

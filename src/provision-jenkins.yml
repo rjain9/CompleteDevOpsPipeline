@@ -11,6 +11,12 @@
   roles:
     - server-jenkins
 
+- name: Provision Redis server
+  hosts: jenkins
+  become: yes 
+  roles:
+    - server-redis
+
 - name: Create EC2 instances
   hosts: jenkins
   become: false
