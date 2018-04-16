@@ -10,7 +10,7 @@
         printf "from $from\nusername $mail_username\npassword $password\nhost $mail_host" > src/main/java/email.properties
         cp /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-itrust/files/pom-data.xml pom-data.xml
         mvn -f pom-data.xml process-test-classes
-        mvn test
+        mvn test verify checkstyle:checkstyle
     concurrent: false
     description: Deployment Job for iTrust2-v2
     disabled: false
