@@ -76,11 +76,13 @@
   npm:
     path: /home/ubuntu/CSC519DevOps-Project/src/redis/
 
+- name: "Install forever (to run redis.js app)."
+  npm: name=forever global=yes state=present
+
 - name: Check if redis.js is running
   command: forever list
   register: forever_list
   changed_when: false
-  become: yes
 
 - name: Run redis feature flag script
   command: forever start redis.js
