@@ -20,7 +20,7 @@ app.get('/featureFlagStatus', function (req, res) {
 				res.end();
 			}
 			else {
-				res.write("<h3>>Status: OFF</h3>");
+				res.write("<h3>Status: OFF</h3>");
 				res.end();
 			}
 		});
