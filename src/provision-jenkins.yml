@@ -10,6 +10,8 @@
   become: yes 
   roles:
     - server-jenkins
+  vars:
+    jenkins_server: "{{ jenkins_server }}"
 
 - name: Provision Redis server
   hosts: jenkins

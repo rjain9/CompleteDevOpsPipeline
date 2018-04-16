@@ -1,4 +1,19 @@
 ---
+- name: Create local templates directory
+  file:
+    path: "{{ local_templates }}"
+    state: directory
+
+- name: Create redis client script
+  template:
+    src: client_redis.yml.j2
+    dest: "{{ local_templates }}client_redis.yml"
+
+- name: Create updated checkbox server script
+  template:
+    src: checkbox_server.js.j2
+    dest: "{{ local_templates }}server.js"
+
 - name: Add repository for Java 8
   apt_repository: 
     repo: 'ppa:webupd8team/java' 
