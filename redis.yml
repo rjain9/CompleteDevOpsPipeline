@@ -11,6 +11,6 @@
       become: yes
 
     - name: Start the server
-      shell: nohup redis-server &
+      shell: nohup redis-server --protected-mode no &
       become: yes
 
