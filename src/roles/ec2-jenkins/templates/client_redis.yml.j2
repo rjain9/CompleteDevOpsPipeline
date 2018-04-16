@@ -1,6 +1,8 @@
 - name: Install dependencies
   apt:
+{% raw %}
     pkg: "{{ item }}"
+{% endraw %}
     state: present
   with_items:
     - gcc
