@@ -6,7 +6,7 @@ We have used techniques related to fuzzing, test case priorization, and automate
 
 |  Team Member |   UnityId |  
 |  ---   |  ---   |  
-|  Rishi Jain  |    rjain |  
+|  Rishi Jain  |    rjain9 |  
 |  Omkar Acharya  |    oachary  |  
 |  Shriyansh Yadav   |  scyadav  |
 |  Urmil Parikh   |  uparikh   |
