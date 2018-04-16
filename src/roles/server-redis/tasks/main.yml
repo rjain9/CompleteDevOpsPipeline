@@ -73,7 +73,7 @@
   shell: sudo /etc/init.d/redis-server restart
 
 - name: npm install
-  shell: npm install
+  command: npm install
   args:
     path: /home/ubuntu/CSC519DevOps-Project/src/redis/
 
