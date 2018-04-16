@@ -19,6 +19,11 @@
 
 ## Deployment
 
+### Checkbox.io Deployment
+
+### iTrust Deployment
+
+<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/iTrustDeployment.png">
 
 ## Infrastructure Upgrade
 
@@ -31,3 +36,5 @@ We implemented canary releasing by using a load balancer which balances traffic 
 <img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/Canary2.png">
 
 ## Rolling Update
+
+<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/rollingUpdate.png">
