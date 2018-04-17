@@ -97,3 +97,25 @@ We implemented canary releasing by using a load balancer which balances traffic 
 ## Rolling Updates
 For this part, we created 5 EC2 instances as the production servers for iTrust and 1 EC2 instance as the central MySQL server for all of them. Using Rolling Update deployment strategy, whenever any new code is pushed to the remote repository, all the servers are redeployed one by one. This can be demonstrated as follows:
 <img src="img/rollingUpdate.png">
+
+
+## Individual Contribution:
+**Omkar Acharya (oachary):**
+* Provisioning `jenkins`, `itrust`, `checkbox.io`, `MySQL`, and `MongoDB`
+* **Part 1A** - `iTrust` deployment
+* **Part 1B** - `checkbox` deployment
+* **Part 2A** - `Kubernetes` clusters
+* **Part 2B** - `Redis feature flag` app using express
+* **Part 4** - `iTrust` rolling updates
+
+**Rishi Jain (rjain9):**
+* 
+* 
+
+**Shriyansh Yadav (scyadav):**
+* 
+* 
+
+**Urmil Parikh (uparikh):**
+* 
+* 
