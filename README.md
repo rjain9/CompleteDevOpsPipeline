@@ -44,6 +44,8 @@
 
 ### Checkbox.io Deployment
 
+<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/checkboxioDeployment.png">
+
 ### iTrust Deployment
 
 <img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/iTrustDeployment.png">
