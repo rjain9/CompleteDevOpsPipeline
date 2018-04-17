@@ -97,7 +97,28 @@
 
 ### Redis Feature Flag
 For this part we configured a redis server by running redis on a remote instance. We can then use the ip of the server and the configured port to access the redis server. For checkbox.io, a feature flag is implemented for create study. The study cannot be created if the value of the flag is false. Otherwise it will create the study. The value of the flag is set to be accessed from the redis server. So whenever the value of the key corresponding to the flag is changed to false, the feature is turned off, but when its true, the feature can be used. To toggle the redis feature flag
+  
+To manually see the working of the `redis app` which provides status as well as toggles the redis flag, you can follow the following steps: 
 
+* ssh into jenkins server
+```
+ssh -i ~/.ssh/jenkins.key ubuntu@<jenkins ip>
+```
+* Go to the directory where redis.js is present 
+```
+cd /home/ubuntu/CSC519DevOps-Project/src/redis
+```
+* If npm modules are not already present from the script, use
+```
+npm install
+```
+* Run
+```
+node redis.js
+```
+* This will run the script on `<jenkins_ip>:5000`
+* To get the status of the feature flag, visit `<jenkins_ip>:5000/featureFlagStatus`
+* To toggle the feature flag, visit `<jenkins_ip>:5000/featureFlagToggle`
 
 ## Canary Release
 We implemented canary releasing by using a load balancer which balances traffic between servers. When an alert is raised (when the canary server is down), all the traffic is redirected to the stable production server. The diagramatic representation of the same is as follows:
