@@ -1,9 +1,0 @@
-- name: Install dependencies
-  update_cache: yes
-  apt:
-    name: '{{ item }}'
-    state: latest
-  with_items:
-    - git
-    - nginx
-  become: yes

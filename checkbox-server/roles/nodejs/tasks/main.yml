@@ -1,9 +1,0 @@
-- name: Get nodejs 9.x setup
-  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-
-- name: Install nodejs
-  update_cache: yes
-  apt:
-    name: nodejs
-  become: yes
-  force: yes
