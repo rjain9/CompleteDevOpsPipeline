@@ -26,5 +26,9 @@
     - kubeadm 
     - kubectl
 
+- name: Get Kubernetes Master IP
+  set_fact:
+    kub_master: "{{ hostvars[inventory_hostname]['groups']['master'][0] }}"
+
 - name: Add Kubernetes node
-  shell: kubeadm join {{ hostvars['master1']['kubernetes_ip'] }}:6443 --token {{ hostvars['master1']['kubernetes_token'] }} --discovery-token-unsafe-skip-ca-verification
+  shell: kubeadm join {{ kub_master }}:6443 --token {{ hostvars[kub_master]['kubernetes_token'] }} --discovery-token-unsafe-skip-ca-verification

@@ -1,5 +1,11 @@
 ---
 - name: Provision Kubernetes
+  hosts: localhost
+  roles:
+    - kubernetes-ec2
+  become: false
+
+- name: Provision Kubernetes
   hosts: master
   roles:
     - kubernetes-master
