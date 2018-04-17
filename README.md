@@ -12,8 +12,16 @@
 ## Screencast
 
 ### [Checkbox Deployment, Canary Release, Redis Feature Flag](https://youtu.be/CCGi_iMIrP8)  
+
+[<img src="https://img.youtube.com/vi/CCGi_iMIrP8/0.jpg" href="Click to Watch" title="Click to Watch" height="200" width="350">](https://youtu.be/CCGi_iMIrP8)
+
 ### [iTrust Deployment, Rolling Update](https://youtu.be/taxZHjd4NmY) 
+
+[<img src="https://img.youtube.com/vi/taxZHjd4NmY/0.jpg" href="Click to Watch" title="Click to Watch" height="200" width="350">](https://youtu.be/taxZHjd4NmY)
+
 ### [Kubernetes Cluster](https://youtu.be/E8VysVK6rA0)
+
+[<img src="https://img.youtube.com/vi/E8VysVK6rA0/0.jpg" href="Click to Watch" title="Click to Watch" height="200" width="350">](https://youtu.be/E8VysVK6rA0)
 
 ## Instructions for Execution
 
