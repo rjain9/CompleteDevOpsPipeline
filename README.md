@@ -91,6 +91,9 @@
 ## Infrastructure Upgrade
 
 ### Kubernetes
+* A dockerized version of `checkbox.io` is created [here](https://hub.docker.com/r/oachary/checkbox/) using [Dockerfile](src/Dockerfile)
+* Kubernetes cluster with one `Master` and three `Nodes` is created on AWS using EC2 instances
+* Kubernetes uses the same dockerized version to create the cluster
 
 ### Redis Feature Flag
 For this part we configured a redis server by running redis on a remote instance. We can then use the ip of the server and the configured port to access the redis server. For checkbox.io, a feature flag is implemented for create study. The study cannot be created if the value of the flag is false. Otherwise it will create the study. The value of the flag is set to be accessed from the redis server. So whenever the value of the key corresponding to the flag is changed to false, the feature is turned off, but when its true, the feature can be used. To toggle the redis feature flag
@@ -126,6 +129,25 @@ node loadbalancer.js
 For this part, we created 5 EC2 instances as the production servers for iTrust and 1 EC2 instance as the central MySQL server for all of them. Using Rolling Update deployment strategy, whenever any new code is pushed to the remote repository, all the servers are redeployed one by one. This can be demonstrated as follows:
 <img src="img/rollingUpdate.png">
 
+#### Heartbeat Mechanism:
+* We are using `nodejs` script to implement this mechanism. Using this, the script continuously shows the status of all the 5 itrust instances. Screencast of this part demonstrates this.
+* To manually see the working of the heartbeat mechanism, you can follow the following steps:
+  * SSH into jenkins server
+  ```bash
+  ssh -i ~/.ssh/jenkins.key ubuntu@<jenkins_ip>
+  ```
+  * Go to the directory where dashboard.js is present 
+  ```bash
+  cd /home/ubuntu/CSC519DevOps-Project/src/itrust-dashboard
+  ```
+  * If npm modules are not already present from the script, use
+  ```bash
+  npm install
+  ```
+  * Run
+  ```bash
+  node dashboard.js
+  ```
 
 ## Individual Contribution:
 **Omkar Acharya (oachary):**
