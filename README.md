@@ -184,8 +184,8 @@ For this part, we created 5 EC2 instances as the production servers for iTrust a
 * **Part 4** - `iTrust` rolling updates monitoring.
 
 **Shriyansh Yadav (scyadav):**
-* 
-* 
+* Worked on deployment of checkbox.io initially.
+* Created the ansible roles for redis server and redis client. 
 
 **Urmil Parikh (uparikh):**
 * Wrote script for creating redis server.
