@@ -1,0 +1,14 @@
+---
+- name: Deploy checkbox.io canary server
+  hosts: checkbox-canary
+  gather_facts: no
+  roles:  
+  - nodejs 
+  - dependencies
+  - repo&config
+  - run
+
+- name: Canary Release (Load balancer)
+  hosts: local
+  roles:
+  - loadbalancer

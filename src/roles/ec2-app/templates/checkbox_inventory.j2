@@ -1,0 +1,15 @@
+[mongo]
+mongo-server-{{ mongo }} ansible_ssh_host={{ mongo }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[checkbox]
+checkbox-server-1-{{ host1 }} ansible_ssh_host={{ host1 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+checkbox-server-2-{{ host2 }} ansible_ssh_host={{ host2 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[checkbox-production]
+checkbox-production-server-1-{{ host1 }} ansible_ssh_host={{ host1 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[checkbox-canary]
+checkbox-canary-server-1-{{ host2 }} ansible_ssh_host={{ host2 }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file={{ aws_key }} ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[local]
+localhost ansible_ssh_host=localhost ansible_connection=local

@@ -1,0 +1,139 @@
+---
+- name: Set environment variables
+  lineinfile:
+    dest: /etc/environment
+    line: "{{ item }}"
+    create: yes
+    state: present
+    insertafter: EOF
+  with_items:
+  - GITHUB_USERNAME={{ lookup('env', 'GITHUB_USERNAME') }}
+  - GITHUB_PASSWORD={{ lookup('env', 'GITHUB_PASSWORD') }}
+  - MAIL_FROM={{ lookup('env', 'MAIL_FROM') }}
+  - MAIL_USER={{ lookup('env', 'MAIL_USER') }}
+  - MAIL_PASSWORD={{ lookup('env', 'MAIL_PASSWORD') }}
+  - MAIL_SMTP={{ lookup('env', 'MAIL_SMTP') }}
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
+- name: Check if iTrust is already up
+  shell: sudo lsof -i:8080 | awk '{print $2}'
+  register: itrust_process
+
+- name: Shutdown iTrust application (if up)
+  shell: "kill {{ item }}"
+  with_items: "{{ itrust_process.stdout_lines[1] }}"
+  when: itrust_process.stdout != ""
+
+- name: Add repository for Java 8
+  apt_repository: 
+    repo: 'ppa:webupd8team/java' 
+    state: present
+
+- name: Set license selected for Oracle Java 8
+  shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+
+- name: Set license seen for Oracle Java 8
+  shell: /bin/echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
+
+- name: Install Java 8
+  apt: 
+    name: oracle-java8-installer 
+    state: latest 
+    update-cache: yes
+
+- name: Install Maven
+  apt: 
+    name: maven
+    state: present
+
+- name: Remove old version of iTrust
+  shell: rm -rf /home/ubuntu/iTrust2-v2/
+
+- name: Clone iTrust repository
+  git: 
+    repo: https://{{ lookup('env', 'GITHUB_USERNAME') }}:{{ lookup('env', 'GITHUB_PASSWORD') }}@github.ncsu.edu/oachary/iTrust2-v2.git 
+    dest: /home/ubuntu/iTrust2-v2/
+    version: production
+
+- name: Modify Email properties file
+  copy:
+    src: /home/ubuntu/templates/email.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/email.properties
+
+- name: Copy Database properties file
+  copy:
+    src: /home/ubuntu/templates/db.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/java/db.properties
+
+- name: Modify Hibernate properties file
+  copy:
+    src: /home/ubuntu/templates/hibernate.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/src/main/resources/hibernate.properties
+
+- name: Generate Test Classes
+  command: bash -lc "mvn process-test-classes -f pom-data.xml"
+  args:
+    chdir: /home/ubuntu/iTrust2-v2/iTrust2/
+
+- name: Copy Database properties file
+  copy:
+    src: /home/ubuntu/templates/db.properties
+    dest: /home/ubuntu/iTrust2-v2/iTrust2/target/classes/db.properties
+
+- name: Start iTrust2 application
+  command: bash -lc "nohup mvn jetty:run &"
+  args:
+    chdir: /home/ubuntu/iTrust2-v2/iTrust2/
+
+- name: Wait for iTrust2 application to up
+  wait_for:
+    port: 8080
+    delay: 10
+
+# - name: Get tomcat installation tar
+#   get_url:
+#     url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M27/bin/apache-tomcat-9.0.0.M27.tar.gz
+#     dest: /opt
+
+# - name: Unzip the tar
+#   unarchive:
+#     remote_src: yes
+#     src: /opt/apache-tomcat-9.0.0.M27.tar.gz
+#     dest: /opt
+
+# - name: Rename the extracted tar
+#   command: mv apache-tomcat-9.0.0.M27 tomcat9
+#   args:
+#     chdir: /opt
+
+# - name: Set CATALINA_HOME environment variables
+#   lineinfile:
+#     path: /etc/environment
+#     line: CATALINA_HOME="/opt/tomcat9"
+#     state: present
+#     insertafter: EOF
+
+# - name: Update the bash profile
+#   shell: . /etc/environment
+
+# - name: Copy tomcat config file
+#   copy:
+#     src: /home/ubuntu/CSC519DevOps-Project/src/roles/server-itrust/files/tomcat-users.xml
+#     dest: /opt/tomcat9/conf/tomcat-users.xml
+#     mode: 0500
+
+# - name: Copy latest WAR file to Tomcat's deployment folder
+#   copy:
+#     src: "{{ itrust_war }}"
+#     dest: "/opt/tomcat9/webapps/iTrust2.war"
+
+# - name: Shutdown Tomcat
+#   shell: nohup sh /opt/tomcat9/bin/shutdown.sh
+
+# - pause:
+#     seconds: 10
+
+# - name: Start Tomcat
+#   shell: nohup sh /opt/tomcat9/bin/startup.sh

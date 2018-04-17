@@ -1,0 +1,75 @@
+---
+- name: Check if checkbox.io is already up
+  shell: sudo lsof -i:80 | awk '{print $2}'
+  register: checkbox_process
+
+- name: Shutdown checkbox.io application (if up)
+  shell: "kill {{ item }}"
+  with_items: "{{ checkbox_process.stdout_lines[1] }}"
+  when: checkbox_process.stdout != ""
+
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      MONGO_USER={{ lookup('env', 'MONGO_USER') }}
+      MONGO_PASSWORD={{ lookup('env', 'MONGO_PASSWORD') }}
+      MONGO_IP={{ lookup('env', 'MONGO_IP') }}
+      MONGO_PORT={{ lookup('env', 'MONGO_PORT') }}
+    create: yes
+    state: present
+
+- name: Get NodeJS 9.x setup
+  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+
+- name: Install NodeJS
+  update_cache: yes
+  apt:
+    name: nodejs
+
+- name: Install Nginx
+  apt:
+    name: nginx
+
+- name: Clone Checkbox repository
+  git: 
+    repo: https://github.com/rjain9/checkbox.io.git
+    dest: /home/ubuntu/checkbox/
+    version: production
+
+- name: Copy Nginx configuration
+  copy: 
+    remote_src: yes
+    src: /home/ubuntu/checkbox/local-conf/nginx.conf 
+    dest: /etc/nginx/nginx.conf
+
+- name: Copy Nginx default
+  copy:
+    remote_src: yes
+    src: /home/ubuntu/checkbox/local-conf/default 
+    dest: /etc/nginx/sites-available/default
+
+- name: Modify Checkbox
+  replace:
+    path: /etc/nginx/sites-available/default
+    regexp: '/Users/gameweld/bitbucket/checkbox.io/checkbox.io/public_html/'
+    replace: '/home/ubuntu/checkbox/public_html'
+
+- name: npm install
+  npm:
+    path: /home/ubuntu/checkbox/server-side/site/
+
+- name: Restart Nginx services
+  service: 
+    name: nginx
+    state: restarted
+
+- name: Run Checkbox.io
+  command: bash -lc "nohup node server.js --coverage &"
+  args: 
+    chdir: /home/ubuntu/checkbox/server-side/site/
+
+- name: Wait for checkbox.io application to up
+  wait_for:
+    port: 80
+    delay: 10

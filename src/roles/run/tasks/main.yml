@@ -1,0 +1,28 @@
+- name: Start the nginx service
+  service: 
+    name: nginx
+    state: restarted
+  become: yes
+
+- name: Check if checkbox.io is running
+  command: forever list
+  register: forever_list
+  changed_when: false
+  become: yes
+
+- name: Start checkbox.io
+  command: forever start server.js
+  when: "forever_list.stdout.find('server.js') == -1"
+  args: 
+    chdir: /home/ubuntu/checkbox/server-side/site/
+  environment:
+    MONGO_PORT: "{{ MONGO_PORT }}"
+    MONGO_IP: "{{ MONGO_IP }}"
+    MONGO_USER: "{{ MONGO_USER }}"
+    MONGO_PASSWORD: "{{ MONGO_PASSWORD }}"
+  become: yes
+
+- name: Wait for checkbox.io application to up
+  wait_for:
+    port: 80
+    delay: 10

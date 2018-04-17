@@ -31,7 +31,7 @@
   | 6 | iTrust server |
   | 7 | iTrust server |
 
-* We  created 4 other AWS-EC2 instances for Kubernetes Cluster
+* We created 4 other AWS-EC2 instances for Kubernetes Cluster
 
   | Instance No. |  Role |
   | --- | --- |
@@ -44,11 +44,11 @@
 
 ### Checkbox.io Deployment
 
-<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/checkboxioDeployment.png">
+<img src="img/checkboxioDeployment.png">
 
 ### iTrust Deployment
 
-<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/iTrustDeployment.png">
+<img src="img/iTrustDeployment.png">
 
 ## Infrastructure Upgrade
 
@@ -56,10 +56,10 @@
 ## Canary Release
 We implemented canary releasing by using a load balancer which balances traffic between servers. When an alert is raised (when the canary server is down), all the traffic is redirected to the stable production server. The diagramatic representation of the same is as follows:
 
-<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/Canary1.png">
+<img src="img/Canary1.png">
 
-<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/Canary2.png">
+<img src="img/Canary2.png">
 
-## Rolling Update
-
-<img src="https://github.ncsu.edu/rjain9/CSC519DevOps-Project/blob/Deployment/images/rollingUpdate.png">
+## Rolling Updates
+For this part, we created 5 EC2 instances as the production servers for iTrust and 1 EC2 instance as the central MySQL server for all of them. Using Rolling Update deployment strategy, whenever any new code is pushed to the remote repository, all the servers are redeployed one by one. This can be demonstrated as follows:
+<img src="img/rollingUpdate.png">

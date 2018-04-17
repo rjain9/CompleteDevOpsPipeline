@@ -1,0 +1,35 @@
+- job:
+    block-downstream: false
+    block-upstream: false
+    builders:
+    - shell: |-
+        cd server-side/site
+        npm install
+    concurrent: false
+    description: Deployment Job for checkbox.io
+    disabled: false
+    name: !!python/unicode 'checkbox'
+    project-type: freestyle
+    properties:
+    - github:
+        url: https://github.com/rjain9/checkbox.io/
+    publishers:
+    - post-tasks:
+      - escalate-status: false
+        matches:
+        - log-text:  
+          operator: AND
+        run-if-job-successful: true
+        script: /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-checkbox/files/deploy-checkbox.sh
+    scm:
+    - git:
+        branches:
+        - '*/production'
+        url: https://github.com/rjain9/checkbox.io
+    triggers:
+    - github
+    - pollscm:
+        cron: '* * * * *'
+        ignore-post-commit-hooks: false
+    workspace: /home/ubuntu/checkbox
+    wrappers: []

@@ -1,0 +1,69 @@
+- name: Check if checkbox.io is already up
+  shell: sudo lsof -i:80 | awk '{print $2}'
+  register: checkbox_process
+  become: yes
+
+- name: Shutdown checkbox.io application (if up)
+  shell: "kill {{ item }}"
+  with_items: "{{ checkbox_process.stdout_lines[1] }}"
+  when: checkbox_process.stdout != ""
+  become: yes
+
+- name: Set environment variables
+  blockinfile:
+    path: /etc/environment
+    block: |
+      MONGO_USER={{ lookup('env', 'MONGO_USER') }}
+      MONGO_PASSWORD={{ lookup('env', 'MONGO_PASSWORD') }}
+      MONGO_IP={{ lookup('env', 'MONGO_IP') }}
+      MONGO_PORT={{ lookup('env', 'MONGO_PORT') }}
+    create: yes
+    state: present
+  become: yes
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
+- name: git clone
+  git: 
+    repo: https://github.com/rjain9/checkbox.io.git
+    dest: /home/ubuntu/checkbox/
+    version: production
+    force: yes
+  become: yes
+
+- name: copy nginx.conf
+  copy: 
+    remote_src: yes
+    src: /home/ubuntu/checkbox/local-conf/nginx.conf 
+    dest: /etc/nginx/nginx.conf
+  become: yes
+
+- name: copy default
+  copy:
+    remote_src: yes
+    src: /home/ubuntu/checkbox/local-conf/default 
+    dest: /etc/nginx/sites-available/default
+  become: yes
+
+- name: Modify checkbox.io
+  replace:
+    path: /etc/nginx/sites-available/default
+    regexp: '/Users/gameweld/bitbucket/checkbox.io/checkbox.io/public_html/'
+    replace: '/home/ubuntu/checkbox/public_html'
+  become: yes
+
+- name: Update server.js with redis feature flags
+  copy:
+    src: /home/ubuntu/templates/server.js
+    dest: /home/ubuntu/checkbox/server-side/site/server.js
+  become: yes
+
+- name: npm Install
+  npm:
+    path: /home/ubuntu/checkbox/server-side/site/
+  become: yes
+
+- name: "Install forever (to run Node.js app)."
+  npm: name=forever global=yes state=present
+  become: yes

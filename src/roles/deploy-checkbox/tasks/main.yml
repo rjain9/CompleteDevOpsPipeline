@@ -1,0 +1,33 @@
+---  
+- name: Set MongoDB IP
+  lineinfile:
+    dest: /etc/environment
+    line: "MONGO_IP={{ mongo }}"
+    create: yes
+    state: present
+    insertafter: EOF
+
+- name: Update the bash profile
+  shell: . /etc/environment
+
+- name: Provision checkbox.io (Production + Canary)
+  shell: sudo ansible-playbook -i /home/ubuntu/templates/checkbox_inventory /home/ubuntu/CSC519DevOps-Project/src/provision-checkbox.yml
+  become: yes
+
+- name: Restart Jenkins
+  service:
+    name: jenkins 
+    state: restarted
+
+- name: Wait for Jenkins to restart
+  wait_for:
+    port: "{{ jenkins_port }}"
+    delay: "{{ jenkins_delay }}"
+
+- name: Create checkbox's job file
+  template:
+    src: checkbox.yml.j2
+    dest: /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-checkbox/files/checkbox.yml
+
+- name: Create job on Jenkins using Jenkins Job Builder
+  command: jenkins-jobs update /home/ubuntu/CSC519DevOps-Project/src/roles/deploy-checkbox/files/checkbox.yml

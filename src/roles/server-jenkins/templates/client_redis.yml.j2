@@ -1,0 +1,62 @@
+- name: Install dependencies
+  apt:
+{% raw %}
+    pkg: "{{ item }}"
+{% endraw %}
+    state: present
+  with_items:
+    - gcc
+    - make
+    - libc6-dev
+
+- name: Download Redis
+  apt_repository:
+    repo: 'ppa:chris-lea/redis-server'
+    state: present
+
+- name: update cache
+  apt:
+    update_cache: yes
+  changed_when: False
+
+- name: Ensure Redis present
+  apt:
+    pkg: redis-server
+    state: latest
+
+- name: Start Redis
+  service:
+    name: redis
+    state: started
+
+- name: Find IP Address
+  command: grep "bind 127.0.0.1" /etc/redis/redis.conf
+  ignore_errors: True
+  changed_when: False
+
+- name: Change IP Address
+  replace:
+    regexp: 'bind 127.0.0.1' 
+    replace: '# bind 127.0.0.1'
+    dest: /etc/redis/redis.conf
+
+- name: slave-add password
+  replace:
+    regexp: '# requirepass foobared'
+    replace: 'requirepass password'
+    dest: /etc/redis/redis.conf
+
+- name: slave-reach master
+  replace:
+    regexp: '# slaveof <masterip> <masterport>'
+    replace: 'slaveof {{ jenkins_server }} 6379'
+    dest: /etc/redis/redis.conf
+
+- name: slave-masterauth
+  replace:
+    regexp: '# masterauth <master-password>'
+    replace: 'masterauth password'
+    dest: /etc/redis/redis.conf
+
+- name: Restart redis service
+  shell: sudo /etc/init.d/redis-server restart

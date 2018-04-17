@@ -1,0 +1,73 @@
+---
+- name: Create AWS key
+  ec2_key:
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+    name: "{{ keypair }}"
+    region: "{{ lookup('env', 'AWS_REGION') }}"
+    state: present
+  register: ec2_i
+
+- name: Generate AWS private key
+  copy:
+    content: "{{ ec2_i.key.private_key }}"
+    dest: /home/ubuntu/.ssh/aws.key
+    mode: 0600
+
+- name: Create EC2 Instances
+  local_action: ec2
+                image={{ image }}
+                instance_type={{ instance_type }}
+                group={{ security_group }}
+                region={{ region }}
+                keypair={{ keypair }}
+                count={{ count }}
+                wait=true
+  register: ec2
+
+- name: Get IPs of all EC2 instances
+  set_fact:
+    mysql: "{{ ec2.instances[0].public_ip }}"
+    mongo: "{{ ec2.instances[0].public_ip }}"
+    host1: "{{ ec2.instances[1].public_ip }}"
+    host2: "{{ ec2.instances[2].public_ip }}"
+    host3: "{{ ec2.instances[3].public_ip }}"
+    host4: "{{ ec2.instances[4].public_ip }}"
+    host5: "{{ ec2.instances[5].public_ip }}"
+    aws_key: /home/ubuntu/.ssh/aws.key
+
+- name: Wait for SSH to come up
+  wait_for: 
+    host: "{{ item.public_ip }}"
+    port: 22
+    timeout: 320
+    state: started
+  with_items:
+    "{{ ec2.instances }}"
+
+- name: Create EC2 IP list file
+  template:
+    src: ec2_ip_list.j2
+    dest: "{{ local_templates }}ec2_ip_list"
+
+- name: Create checkbox inventory file
+  template:
+    src: checkbox_inventory.j2
+    dest: "{{ local_templates }}checkbox_inventory"
+
+- name: Create itrust inventory file
+  template:
+    src: itrust_inventory.j2
+    dest: "{{ local_templates }}itrust_inventory"
+
+- name: Create redis client script
+  copy:
+    remote_src: yes
+    src: "{{ local_templates }}client_redis.yml"
+    dest: "{{ redis_client_role }}/tasks/main.yml"
+
+- name: Deploy MySQL server
+  shell: sudo ansible-playbook -i /home/ubuntu/templates/itrust_inventory /home/ubuntu/CSC519DevOps-Project/src/deploy-mysql.yml
+
+- name: Deploy MongoDB server
+  shell: sudo ansible-playbook -i /home/ubuntu/templates/checkbox_inventory /home/ubuntu/CSC519DevOps-Project/src/deploy-mongo.yml

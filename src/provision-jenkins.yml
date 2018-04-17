@@ -1,0 +1,36 @@
+---
+- name: Create EC2 instance for Jenkins
+  hosts: local
+  become: false
+  roles:
+    - ec2-jenkins
+
+- name: Provision Jenkins server
+  hosts: jenkins
+  become: yes 
+  roles:
+    - server-jenkins
+
+- name: Provision Redis server
+  hosts: jenkins
+  become: yes 
+  roles:
+    - server-redis
+
+- name: Create EC2 instances
+  hosts: jenkins
+  become: false
+  roles:
+    - ec2-app
+
+- name: Deploy checkbox.io
+  hosts: jenkins
+  become: yes 
+  roles:
+    - deploy-checkbox
+
+- name: Deploy iTrust
+  hosts: jenkins
+  become: yes 
+  roles:
+    - deploy-itrust

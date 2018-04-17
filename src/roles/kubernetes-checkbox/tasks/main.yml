@@ -1,0 +1,13 @@
+---
+- name: Run Kubernetes cluster for checkbox.io
+  shell: kubectl run checkbox --image=oachary/checkbox --port=80
+
+- name: Expose ports
+  shell: kubectl expose deployment checkbox --type=NodePort
+
+- name: Get port mapping
+  shell: kubectl get svc
+  register: port_mapping
+
+- debug:
+    msg: "{{ port_mapping }}"

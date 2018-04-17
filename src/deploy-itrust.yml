@@ -1,0 +1,7 @@
+---
+- name: Deploy iTrust servers
+  hosts: itrust
+  serial: 1
+  become: yes 
+  roles:
+    - server-itrust
