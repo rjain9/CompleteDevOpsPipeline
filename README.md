@@ -17,6 +17,29 @@
 ### [Kubernetes Cluster]()
 ### [Redis Feature Flag]()
 
+## AWS-EC2 Instances:
+
+* We created 7 AWS-EC2 instances for Deployment, Redis Feature Flag, Canary Release and Rolling Updates.
+
+  | Instance No. |  Role |
+  | --- | --- |
+  | 1 | Jenkins Server, Redis master, Loadbalancer(proxy for checkbox.io), Monitoring of Rolling update (Heartbeat) |
+  | 2 | MySQL,server, MongoDB server |
+  | 3 | iTrust server, Checkbox.io server |
+  | 4 | iTrust server, Checkbox.io server |
+  | 5 | iTrust server |
+  | 6 | iTrust server |
+  | 7 | iTrust server |
+
+* We  created 4 other AWS-EC2 instances for Kubernetes Cluster
+
+  | Instance No. |  Role |
+  | --- | --- |
+  | 1 | Master |
+  | 2 | Node |
+  | 3 | Node |
+  | 4 | Node |
+
 ## Deployment
 
 ### Checkbox.io Deployment
