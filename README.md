@@ -94,6 +94,25 @@ We implemented canary releasing by using a load balancer which balances traffic 
 
 <img src="img/Canary2.png">
 
+To manually see the working of the loadbalancer which redirects traffic to stable production and canary server you can just follow the following steps: 
+
+* ssh into jenkins server
+```
+ssh -i ~/.ssh/jenkins.key ubuntu@<jenkins ip>
+```
+* Go to the directory where loadbalancer.js is present 
+```
+cd /home/ubuntu/CSC519DevOps-Project/src/roles/loadbalancer/files
+```
+* If npm modules are not already present from the script, use
+```
+npm install
+```
+* Run
+```
+node loadbalancer.js
+```
+
 ## Rolling Updates
 For this part, we created 5 EC2 instances as the production servers for iTrust and 1 EC2 instance as the central MySQL server for all of them. Using Rolling Update deployment strategy, whenever any new code is pushed to the remote repository, all the servers are redeployed one by one. This can be demonstrated as follows:
 <img src="img/rollingUpdate.png">
@@ -103,14 +122,14 @@ For this part, we created 5 EC2 instances as the production servers for iTrust a
 **Omkar Acharya (oachary):**
 * Provisioning `jenkins`, `itrust`, `checkbox.io`, `MySQL`, and `MongoDB`
 * **Part 1A** - `iTrust` deployment
-* **Part 1B** - `checkbox` deployment
 * **Part 2A** - `Kubernetes` clusters
 * **Part 2B** - `Redis feature flag` app using express
 * **Part 4** - `iTrust` rolling updates
 
 **Rishi Jain (rjain9):**
-* 
-* 
+* **Part 1B** - `checkbox.io` deployment.
+* **Part 3** - `checkbox.io` Canary Release.
+* **Part 4** - `iTrust` rolling updates monitoring.
 
 **Shriyansh Yadav (scyadav):**
 * 
