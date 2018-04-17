@@ -3,7 +3,7 @@
 
 ## Team Members
 
-| Name | Unity Id |
+| Name | Unity ID |
 | --- | --- |
 | Rishi Jain | rjain9 |
 | Omkar Acharya | oachary |
@@ -12,10 +12,9 @@
 
 ## Screencast:  
 
-### [Checkbox Deployment and Canary Release]()  
-### [iTrust Deployment and Rolling Update]() 
+### [Checkbox Deployment, Canary Release, Redis Feature Flag](https://youtu.be/CCGi_iMIrP8)  
+### [iTrust Deployment, Rolling Update](https://youtu.be/taxZHjd4NmY) 
 ### [Kubernetes Cluster]()
-### [Redis Feature Flag]()
 
 ## AWS-EC2 Instances:
 
