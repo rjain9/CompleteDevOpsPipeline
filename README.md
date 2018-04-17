@@ -85,6 +85,7 @@
 ### Kubernetes
 
 ### Redis Feature Flag
+For this part we configured a redis server by running redis on a remote instance. We can then use the ip of the server and the configured port to access the redis server. For checkbox.io, a feature flag is implemented for create study. The study cannot be created if the value of the flag is false. Otherwise it will create the study. The value of the flag is set to be accessed from the redis server. So whenever the value of the key corresponding to the flag is changed to false, the feature is turned off, but when its true, the feature can be used. To toggle the redis feature flag
 
 
 ## Canary Release
@@ -136,5 +137,5 @@ For this part, we created 5 EC2 instances as the production servers for iTrust a
 * 
 
 **Urmil Parikh (uparikh):**
-* 
-* 
+* Wrote script for creating redis server.
+* Implemented feature flag in checkbox.io.
