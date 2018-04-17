@@ -131,7 +131,7 @@ To manually see the working of the loadbalancer which redirects traffic to stabl
 
 * ssh into jenkins server
 ```
-ssh -i ~/.ssh/jenkins.key ubuntu@<jenkins ip>
+ssh -i ~/.ssh/jenkins.key ubuntu@<jenkins_ip>
 ```
 * Go to the directory where loadbalancer.js is present 
 ```
