@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./server-side/site/node_modules/.bin/eslint ./server-side/site/*.js
