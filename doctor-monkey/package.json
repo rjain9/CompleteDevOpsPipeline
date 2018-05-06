@@ -1,0 +1,30 @@
+{
+    "name": "design-node",
+    "description": "Survey Design Server",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+      "archiver": "~0.4.6",
+      "cors": "^2.7.1",
+      "express": "3.x",
+      "marked": "0.3.9",
+      "jade": "^1.9.2",
+      "json5": "^0.4.0",
+      "mongodb": "*",
+      "emailjs":"*",
+      "validator":"*",
+      "bson":"*",
+      "mongoose":"*",
+      "underscore": "^1.7.0",
+      "async": "*",
+      "escodegen": "^1.4.1",
+      "esprima": "^1.2.2",
+      "multer": "^0.1.8",
+      "redis": "^0.12.1",
+      "istanbul": "^0.3.2",
+      "http-proxy": "^1.9.0",
+      "xmlhttprequest": "*",
+      "request": "^2.54.0"
+    }
+  }
+  
