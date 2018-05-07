@@ -49,6 +49,20 @@ $ node server.js
 * [Wired](https://www.wired.com/2014/07/security-monkey/)
 
 
+## Bulk Request Handling
+  
+### Concept
+When multiple simultaneous POST requests are made to a server, it utilizes a huge chunk of the server memory, thus slowing it down. In extreme cases the server may even crash. So to prevent such a thing a good technique would be to send the server in a read-only mode where it wont accept any POST request but the content is still accessible through a GET request. The transition would be made when the memory usage exceeds a certain percentage.
+  
+### Implementation
+For implementing it, follow these instructions -
+* Run the updated checkbox.io server.
+* Change the ip in post.js to the server ip.
+* Run post.js - ``` node post.js```
+* You will observe that the server slows down after a few requests. This makes the server go into a read only mode.
+* Any POST request made to the server won't work. Only the GET requests work.
+* So the content of the server is accessible to the users but they can't POST new content.
+
 ## Individual Contribution:
 **Omkar Acharya (oachary):**
 * `Doctor Monkey` setup and implementation
@@ -60,3 +74,6 @@ $ node server.js
 **Shriyansh Yadav (scyadav):**
 
 **Urmil Parikh (uparikh):**
+* Implemented the `Bulk Request Handler` part.
+* Wrote the code for sending simultaneous multiple POST requests to the server.
+* Screencast and README for the above.
