@@ -57,10 +57,10 @@ When multiple simultaneous POST requests are made to a server, it utilizes a hug
 ### Implementation
 For implementing it, follow these instructions -
 * Run the updated checkbox.io server.
-* Change the ip in post.js to the server ip.
+* Change the IP in post.js to the server IP.
 * Run post.js - ``` node post.js```
 * You will observe that the server slows down after a few requests. This makes the server go into a read only mode.
-* Any POST request made to the server won't work. Only the GET requests work.
+* Any subsequent POST request made to the server won't work. Only the GET requests work.
 * So the content of the server is accessible to the users but they can't POST new content.
 
 ## Individual Contribution:
