@@ -9,7 +9,7 @@
 | Shriyansh Yadav | scyadav |
 | Urmil Parikh | uparikh |
 
-## Complete DevOps Pipeline Demo: [Link]()
+## Complete DevOps Pipeline Demo: [Link](https://youtu.be/O_8tCQAwt64)
 ## Special Milestone Demo: [Link](https://youtu.be/0c2K9acPxyw)
 
 ## 1. Doctor Monkey
@@ -95,6 +95,9 @@ cat .eslintrc.json
 * Screencast and README for the `Doctor Monkey`
 
 **Rishi Jain (rjain9):**
+* Complete DevOps Pipeline Project presentation and screencast.
+* `Doctor Monkey` partial implementation.
+* `ESLint` initial trial and testing.
 
 **Shriyansh Yadav (scyadav):**
 * `ESLint` installation and codestyle rules
