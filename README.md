@@ -9,9 +9,10 @@
 | Shriyansh Yadav | scyadav |
 | Urmil Parikh | uparikh |
 
-## Doctor Monkey
+## Complete DevOps Pipeline Demo: [Link]()
+## Special Milestone Demo: [Link]()
 
-### Screencast: [Link](https://youtu.be/-205G86rt9U)
+## 1. Doctor Monkey
 
 ### Concept
 
@@ -49,7 +50,7 @@ $ node server.js
 * [Wired](https://www.wired.com/2014/07/security-monkey/)
 
 
-## Load Handling
+## 2. Load Handler
   
 ### Concept
 When multiple simultaneous POST requests are made to a server, it utilizes a huge chunk of the server memory, thus slowing it down. In extreme cases the server may even crash. So to prevent such a thing a good technique would be to send the server in a read-only mode where it wont accept any POST request but the content is still accessible through a GET request. The transition would be made when the memory usage exceeds a certain percentage.
@@ -62,6 +63,30 @@ For implementing it, follow these instructions -
 * You will observe that the server slows down after a few requests. This makes the server go into a read only mode.
 * Any subsequent POST request made to the server won't work. Only the GET requests work.
 * So the content of the server is accessible to the users but they can't POST new content.
+
+## 3. ESLint
+
+### Concept
+`ESLint` is an open source JavaScript linting utility. Code linting is a type of static analysis that is frequently used to find problematic patterns or code that doesn’t adhere to certain style guidelines. It allows to create our own linting rules.
+
+### Implementation:
+* Install ESLint: 
+```bash
+npm install eslint
+```
+* Initialize rules: 
+```bash
+./node_modules/.bin/eslint --init
+```
+* Created rules can be seen using:
+```bash
+cat .eslintrc.json
+```
+* Copy this [pre-commit](eslint/pre-commit) hook to `.git/hooks/` of `checkbox.io` 
+* Now, on commiting the files (`git commit -m <message>`), ESLint will check the codestyle of the codebase for all the JavaScript Files and it gives the output as:
+  
+  ![ESLint Console Output](img/ESLint.png)
+
 
 ## Individual Contribution:
 **Omkar Acharya (oachary):**
