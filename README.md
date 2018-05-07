@@ -92,11 +92,14 @@ cat .eslintrc.json
 **Omkar Acharya (oachary):**
 * `Doctor Monkey` setup and implementation
 * `Checkbox.io` proxy server implementation
-* Screencast and README for the above
+* Screencast and README for the `Doctor Monkey`
 
 **Rishi Jain (rjain9):**
 
 **Shriyansh Yadav (scyadav):**
+* `ESLint` installation and codestyle rules
+* Wrote a pre-commit hook for `ESLint`
+* Screencast and README for the `ESLint`
 
 **Urmil Parikh (uparikh):**
 * Implemented the `Load Handler` part.
